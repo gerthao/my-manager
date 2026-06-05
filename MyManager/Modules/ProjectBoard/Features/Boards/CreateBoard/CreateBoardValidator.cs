@@ -15,7 +15,7 @@ public class CreateBoardValidator : IValidator<CreateBoardRequest, CreateBoardCo
     private static Validated<ValidationError, Option<string>> ValidateDescription(Option<string> description) =>
         Validated<ValidationError, Option<string>>.Condition(
             description.IsEmpty || description.Exists(d => d.Trim().Length <= 255),
-            () => description.Map(d => d.Trim()),
+            () => description.Map(d => d.Trim()).FilterNot(d => d == ""),
             () => new ValidationError("description", "Project description cannot exceed 255 characters.")
         );
 

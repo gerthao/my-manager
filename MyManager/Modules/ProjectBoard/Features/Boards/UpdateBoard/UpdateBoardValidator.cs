@@ -12,12 +12,15 @@ public sealed class UpdateBoardValidator : IValidator<UpdateBoardRequest, Update
         ValidateDescription(request.Body.Description.ToOption())
     ).MapN((name, description) => new UpdateBoardCommand(request.Id, name, description));
 
-    private static Validated<ValidationError, Option<string>> ValidateDescription(Option<string> description) =>
-        Validated<ValidationError, Option<string>>.Condition(
+    private static Validated<ValidationError, Option<string>> ValidateDescription(Option<string> description)
+    {
+        return Validated<ValidationError, Option<string>>.Condition(
             description.IsEmpty || description.Exists(d => d.Trim().Length <= 255),
-            () => description.Map(d => d.Trim()),
+            () => description.Map(d => d.Trim()).FilterNot(d => d == ""),
             () => new ValidationError("description", "Project description cannot exceed 255 characters.")
         );
+    }
+
 
     private static Validated<ValidationError, string> ValidateName(string name)
     {
