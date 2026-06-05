@@ -1,0 +1,6 @@
+﻿services:
+  mymanager:
+    image: mymanager
+    build:
+      context: .
+      dockerfile: MyManager/Dockerfile

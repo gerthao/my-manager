@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.8" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.8" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.8" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MyManager.Attributes\MyManager.Attributes.csproj" />
+      <ProjectReference Include="..\MyManager.Common\MyManager.Common.csproj" />
+      <ProjectReference 
+              Include="..\MyManager.SourceGenerators\MyManager.SourceGenerators\MyManager.SourceGenerators.csproj"
+              OutputItemType="Analyzer"
+      />
+    </ItemGroup>
+
+</Project>

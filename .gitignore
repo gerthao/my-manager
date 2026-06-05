@@ -1,0 +1,8 @@
+MyManager/bin
+MyManager/obj
+MyManager.*/bin
+MyManager.*/obj
+MyManager.SourceGenerators/MyManager.SourceGenerators.Tests/bin
+MyManager.SourceGenerators/MyManager.SourceGenerators.Tests/obj
+MyManager.SourceGenerators/MyManager.SourceGenerators/bin
+MyManager.SourceGenerators/MyManager.SourceGenerators/obj
