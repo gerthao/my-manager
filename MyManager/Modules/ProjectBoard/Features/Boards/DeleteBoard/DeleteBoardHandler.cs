@@ -20,7 +20,7 @@ public sealed class DeleteBoardHandler(ProjectBoardDbContext db) : IDeleteBoardH
         var board = await db.Boards.Where(b => b.Id == command.Id).FirstOrDefaultAsync(ct);
 
         if (board == null)
-            return ProjectBoardErrors.NotFound(command.Id);
+            return BoardErrors.NotFound(command.Id);
 
         db.Boards.Remove(board);
 

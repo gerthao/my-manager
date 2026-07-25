@@ -6,7 +6,7 @@ namespace MyManager.Modules.ProjectBoard.Features.Columns.CreateColumn;
 [RegisterSingleton(typeof(IValidator<CreateColumnRequest, CreateColumnCommand>))]
 public sealed class CreateColumnValidator : IValidator<CreateColumnRequest, CreateColumnCommand>
 {
-    private Validated<ValidationError, string> ValidateName(string name)
+    private static Validated<ValidationError, string> ValidateName(string name)
     {
         var trimmed = name.Trim();
 

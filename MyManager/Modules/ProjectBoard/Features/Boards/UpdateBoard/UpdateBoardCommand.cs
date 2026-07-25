@@ -4,4 +4,4 @@ using MyManager.Common;
 namespace MyManager.Modules.ProjectBoard.Features.Boards.UpdateBoard;
 
 [Isomorph]
-public partial record UpdateBoardCommand(int Id, string Name, Option<string> Description);
+public sealed partial record UpdateBoardCommand(int Id, string Name, Option<string> Description);

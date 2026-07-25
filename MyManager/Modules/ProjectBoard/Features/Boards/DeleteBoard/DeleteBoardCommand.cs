@@ -3,4 +3,4 @@
 namespace MyManager.Modules.ProjectBoard.Features.Boards.DeleteBoard;
 
 [Isomorph]
-public partial record DeleteBoardCommand(int Id);
+public sealed partial record DeleteBoardCommand(int Id);

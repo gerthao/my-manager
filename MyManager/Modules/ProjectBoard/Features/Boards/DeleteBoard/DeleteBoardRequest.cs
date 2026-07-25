@@ -2,4 +2,4 @@
 
 namespace MyManager.Modules.ProjectBoard.Features.Boards.DeleteBoard;
 
-public record DeleteBoardRequest([FromRoute] int Id);
+public sealed record DeleteBoardRequest([FromRoute] int Id);

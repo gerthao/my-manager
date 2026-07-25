@@ -11,7 +11,7 @@ public interface IGetBoardByIdHandler
 }
 
 [RegisterScoped]
-public class GetBoardByIdHandler(ProjectBoardDbContext db) : IGetBoardByIdHandler
+public sealed class GetBoardByIdHandler(ProjectBoardDbContext db) : IGetBoardByIdHandler
 {
     public async Task<Result<string>> HandleQuery(GetBoardByIdQuery query,
         CancellationToken ct = default)
@@ -21,7 +21,7 @@ public class GetBoardByIdHandler(ProjectBoardDbContext db) : IGetBoardByIdHandle
             .FirstOrDefaultAsync(ct);
 
         if (slug == null)
-            return ProjectBoardErrors.NotFound(query.Id);
+            return BoardErrors.NotFound(query.Id);
 
         return slug;
     }

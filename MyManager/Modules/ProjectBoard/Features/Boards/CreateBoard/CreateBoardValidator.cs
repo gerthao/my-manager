@@ -5,7 +5,7 @@ using MyManager.Common.Extensions;
 namespace MyManager.Modules.ProjectBoard.Features.Boards.CreateBoard;
 
 [RegisterSingleton]
-public class CreateBoardValidator : IValidator<CreateBoardRequest, CreateBoardCommand>
+public sealed class CreateBoardValidator : IValidator<CreateBoardRequest, CreateBoardCommand>
 {
     public Validated<ValidationError, CreateBoardCommand> Validate(CreateBoardRequest request) => (
         ValidateName(request.Body.Name),

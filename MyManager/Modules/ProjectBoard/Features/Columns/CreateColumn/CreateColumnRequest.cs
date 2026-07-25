@@ -2,11 +2,11 @@
 
 namespace MyManager.Modules.ProjectBoard.Features.Columns.CreateColumn;
 
-public record CreateColumnRequest(
+public sealed record CreateColumnRequest(
     [FromRoute] int BoardId,
     [FromBody] CreateColumnBody Body
 );
 
-public record CreateColumnBody(
+public sealed record CreateColumnBody(
     string Name
 );

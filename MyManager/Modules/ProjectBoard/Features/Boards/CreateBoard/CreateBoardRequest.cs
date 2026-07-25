@@ -2,8 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MyManager.Modules.ProjectBoard.Features.Boards.CreateBoard;
 
-public record CreateBoardRequest(
+public sealed record CreateBoardRequest(
     [FromBody] CreateBoardRequestBody Body
 );
 
-public record CreateBoardRequestBody(string Name, string? Description = null);
+public sealed record CreateBoardRequestBody(string Name, string? Description = null);

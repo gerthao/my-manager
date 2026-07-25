@@ -21,7 +21,7 @@ public sealed class UpdateBoardHandler(ProjectBoardDbContext db) : IUpdateBoardH
         var board = await db.Boards.Where(b => b.Id == command.Id).FirstOrDefaultAsync(ct);
 
         if (board == null)
-            return ProjectBoardErrors.NotFound(command.Id);
+            return BoardErrors.NotFound(command.Id);
 
         board.Name = command.Name;
         board.Description = command.Description.OrNull();

@@ -12,7 +12,7 @@ public interface IGetBoardBySlugHandler
 }
 
 [RegisterScoped]
-public class GetBoardBySlugHandler(ProjectBoardDbContext db) : IGetBoardBySlugHandler
+public sealed class GetBoardBySlugHandler(ProjectBoardDbContext db) : IGetBoardBySlugHandler
 {
     public async Task<Result<GetBoardBySlugResponse>> HandleQuery(GetBoardBySlugQuery query,
         CancellationToken ct = default)
@@ -22,7 +22,7 @@ public class GetBoardBySlugHandler(ProjectBoardDbContext db) : IGetBoardBySlugHa
             .FirstOrDefaultAsync(ct);
 
         if (board == null)
-            return ProjectBoardErrors.NotFound(query.Slug);
+            return BoardErrors.NotFound(query.Slug);
 
         return board;
     }

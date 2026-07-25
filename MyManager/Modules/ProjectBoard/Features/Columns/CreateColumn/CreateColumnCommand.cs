@@ -3,4 +3,4 @@
 namespace MyManager.Modules.ProjectBoard.Features.Columns.CreateColumn;
 
 [Isomorph]
-public sealed class CreateColumnCommand(int BoardId, string Name);
+public sealed partial record CreateColumnCommand(int BoardId, string Name);

@@ -14,14 +14,14 @@ public interface ICreateBoardHandler
 }
 
 [RegisterScoped]
-public class CreateBoardHandler(ProjectBoardDbContext db) : ICreateBoardHandler
+public sealed class CreateBoardHandler(ProjectBoardDbContext db) : ICreateBoardHandler
 {
     public async Task<Result<CreateBoardResponse>> HandleCommand(CreateBoardCommand command,
         CancellationToken ct = default)
     {
         var boardExists = await db.Boards.Where(b => b.Name == command.Name).AnyAsync(ct);
         if (boardExists)
-            return ProjectBoardErrors.AlreadyExists(command.Name);
+            return BoardErrors.AlreadyExists(command.Name);
 
         var board = new Board
         {
