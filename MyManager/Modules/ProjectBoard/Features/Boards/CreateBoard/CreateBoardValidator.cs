@@ -16,16 +16,16 @@ public sealed class CreateBoardValidator : IValidator<CreateBoardRequest, Create
         Validated<ValidationError, Option<string>>.Condition(
             description.IsEmpty || description.Exists(d => d.Trim().Length <= 255),
             () => description.Map(d => d.Trim()).FilterNot(d => d == ""),
-            () => new ValidationError("description", "Project description cannot exceed 255 characters.")
+            () => new ValidationError("description", "Board description cannot exceed 255 characters.")
         );
 
     private static Validated<ValidationError, string> ValidateName(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
-            return new ValidationError("name", "Project name must be at least 1 character long.");
+            return new ValidationError("name", "Board name must be at least 1 character long.");
 
         if (name.Length > 100)
-            return new ValidationError("name", "Project name cannot exceed 100 characters.");
+            return new ValidationError("name", "Board name cannot exceed 100 characters.");
 
         return name.Trim();
     }
