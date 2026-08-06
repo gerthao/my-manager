@@ -7,7 +7,7 @@ namespace MyManager.Modules.ProjectBoard.Features.Columns.ListColumns;
 
 using ListColumnsResult = Results<BadRequest<ErrorDetails>, Ok<List<ListColumnsResponse>>>;
 
-public abstract class ListColumnsEndpoint : IEndpoint
+public sealed class ListColumnsEndpoint : IEndpoint
 {
     public static void MapEndpoint(IEndpointRouteBuilder app)
     {

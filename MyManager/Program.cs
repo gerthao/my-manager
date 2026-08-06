@@ -1,3 +1,4 @@
+using MyManager;
 using MyManager.Http;
 using MyManager.Services;
 
@@ -20,5 +21,6 @@ app.UseHttpsRedirection();
 app.UseModuleMiddleware();
 
 app.MapModuleEndpoints();
+app.RegisterRoutes();
 
 app.Run();

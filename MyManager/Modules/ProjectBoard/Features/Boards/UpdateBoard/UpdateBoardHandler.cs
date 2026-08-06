@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using MyManager.Attributes;
 using MyManager.Common;
 using MyManager.Common.Extensions;
+using MyManager.Http;
 using MyManager.Modules.ProjectBoard.Domain.Errors;
 
 namespace MyManager.Modules.ProjectBoard.Features.Boards.UpdateBoard;
@@ -13,9 +14,9 @@ public interface IUpdateBoardHandler
 }
 
 [RegisterScoped]
-public sealed class UpdateBoardHandler(ProjectBoardDbContext db) : IUpdateBoardHandler
+public sealed class UpdateBoardHandler(ProjectBoardDbContext db) : IRequestHandler<UpdateBoardCommand, Result<UpdateBoardResponse>>
 {
-    public async Task<Result<UpdateBoardResponse>> HandleCommand(UpdateBoardCommand command,
+    public async Task<Result<UpdateBoardResponse>> Handle(UpdateBoardCommand command,
         CancellationToken ct = default)
     {
         var board = await db.Boards.Where(b => b.Id == command.Id).FirstOrDefaultAsync(ct);

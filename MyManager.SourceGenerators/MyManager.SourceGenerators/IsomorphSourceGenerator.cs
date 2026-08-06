@@ -18,8 +18,8 @@ public sealed class IsomorphSourceGenerator : IIncrementalGenerator
     {
         var provider = context.SyntaxProvider
             .CreateSyntaxProvider(
-                (s, _) => s is RecordDeclarationSyntax,
-                (ctx, _) => GetClassDeclarationForSourceGen(ctx))
+                static (s, _) => s is RecordDeclarationSyntax,
+                static (ctx, _) => GetRecordDeclarationForSourceGen(ctx))
             .Where(t => t.attributeFound)
             .Select((t, _) => t.Item1);
 
@@ -28,28 +28,28 @@ public sealed class IsomorphSourceGenerator : IIncrementalGenerator
             ((ctx, t) => GenerateCode(ctx, t.Left, t.Right)));
     }
 
-    private static (RecordDeclarationSyntax, bool attributeFound) GetClassDeclarationForSourceGen(
+    private static (RecordDeclarationSyntax, bool attributeFound) GetRecordDeclarationForSourceGen(
         GeneratorSyntaxContext context)
     {
-        var classDeclarationSyntax = (RecordDeclarationSyntax)context.Node;
+        var recordDeclarationSyntax = (RecordDeclarationSyntax)context.Node;
 
         // Go through all attributes of the class.
-        foreach (AttributeListSyntax attributeListSyntax in classDeclarationSyntax.AttributeLists)
+        foreach (AttributeListSyntax attributeListSyntax in recordDeclarationSyntax.AttributeLists)
         foreach (AttributeSyntax attributeSyntax in attributeListSyntax.Attributes)
         {
             if (context.SemanticModel.GetSymbolInfo(attributeSyntax).Symbol is not IMethodSymbol attributeSymbol)
                 continue; // if we can't get the symbol, ignore it
 
-            string attributeName = attributeSymbol.ContainingType.ToDisplayString();
+            var attributeName = attributeSymbol.ContainingType.ToDisplayString();
 
             if (attributeName == $"{Namespace}.{AttributeName}")
-                return (classDeclarationSyntax, true);
+                return (recordDeclarationSyntax, true);
         }
 
-        return (classDeclarationSyntax, false);
+        return (recordDeclarationSyntax, false);
     }
 
-    private void GenerateCode(SourceProductionContext context, Compilation compilation,
+    private static void GenerateCode(SourceProductionContext context, Compilation compilation,
                               ImmutableArray<RecordDeclarationSyntax> declarations)
     {
         // Go through all filtered class declarations.

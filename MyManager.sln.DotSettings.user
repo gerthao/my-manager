@@ -18,4 +18,13 @@
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ATask_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2026_002E1_003Fresharper_002Dhost_003FSourcesCache_003F4d431e535966d3e8d58aed86698f4938fdfbde11da876f5c3a222aa8c29b1_003FTask_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ATypedResults_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2026_002E1_003Fresharper_002Dhost_003FDecompilerCache_003Fdecompiler_003Fad58896fb1f74a2481c12e5fa324e49244750_003Fa3_003Fb0c45236_003FTypedResults_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AUpdateBoardCommand_002EIsomorph_002Eg_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FLocal_003FTemp_003FSourceGeneratedDocuments_003F6A848916C1873B6D46C67DFD_003FMyManager_002ESourceGenerators_003FMyManager_002ESourceGenerators_002EIsomorphSourceGenerator_003FUpdateBoardCommand_002EIsomorph_002Eg_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
+  &lt;Assembly Path="C:\Users\gthao\RiderProjects\MyManager\MyManager\bin\Debug\net10.0\Microsoft.CodeAnalysis.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\gthao\RiderProjects\MyManager\MyManager\bin\Debug\net10.0\Microsoft.CodeAnalysis.CSharp.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\gthao\RiderProjects\MyManager\MyManager\bin\Debug\net10.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\gthao\RiderProjects\MyManager\MyManager.SourceGenerators\MyManager.SourceGenerators\bin\Debug\netstandard2.0\MyManager.SourceGenerators.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\gthao\.nuget\packages\system.collections.immutable\6.0.0\lib\netstandard2.0\System.Collections.Immutable.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\gthao\RiderProjects\MyManager\MyManager\bin\Debug\net10.0\MyManager.SourceGenerators.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\gthao\RiderProjects\MyManager\MyManager\bin\Debug\net10.0\Microsoft.AspNetCore.OpenApi.dll" /&gt;&#xD;
+&lt;/AssemblyExplorer&gt;</s:String>
 	</wpf:ResourceDictionary>

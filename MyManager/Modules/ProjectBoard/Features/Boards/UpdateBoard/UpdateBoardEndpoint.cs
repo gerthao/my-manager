@@ -13,19 +13,23 @@ public abstract class UpdateBoardEndpoint : IEndpoint
         app.MapPut("/boards/{id}", HandleEndpoint)
             .WithName(nameof(UpdateBoardEndpoint));
 
+    public readonly record struct Services(
+        IValidator<UpdateBoardRequest, UpdateBoardCommand> validator,
+        IRequestHandler<UpdateBoardCommand, Result<UpdateBoardResponse>> handler,
+        ILogger<ProjectBoardModule> logger
+    );
+
     public static Task<UpdateBoardEndpointResult> HandleEndpoint(
         [AsParameters] UpdateBoardRequest request,
-        IValidator<UpdateBoardRequest, UpdateBoardCommand> validator,
-        IUpdateBoardHandler handler,
-        ILogger<ProjectBoardModule> logger,
+        [AsParameters] Services services,
         CancellationToken ct = default
-    ) => validator.Validate(request).FoldAsync(
+    ) => services.validator.Validate(request).FoldAsync(
         errors => ErrorDetails.FieldErrorOnly(errors).Pipe(TypedResults.BadRequest),
-        async command => (await handler.HandleCommand(command, ct)).Fold<UpdateBoardEndpointResult>(
+        async command => (await services.handler.Handle(command, ct)).Fold<UpdateBoardEndpointResult>(
             error => error
                 .Pipe(ErrorDetails.GlobalErrorOnly).Pipe(TypedResults.BadRequest),
             updated => updated
-                .Tap(u => UpdateBoardLogs.LogUpdated(logger, u.Id, u.Slug))
+                .Tap(u => UpdateBoardLogs.LogUpdated(services.logger, u.Id, u.Slug))
                 .Pipe(TypedResults.Ok)
         )
     );

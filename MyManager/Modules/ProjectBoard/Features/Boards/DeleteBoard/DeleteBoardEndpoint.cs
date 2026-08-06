@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
+using MyManager.Attributes;
 using MyManager.Common;
 using MyManager.Common.Extensions;
 using MyManager.Http;
@@ -7,11 +8,12 @@ namespace MyManager.Modules.ProjectBoard.Features.Boards.DeleteBoard;
 
 using DeleteBoardResult = Results<BadRequest<ErrorDetails>, NoContent>;
 
-public abstract class DeleteBoardEndpoint : IEndpoint
+public abstract class DeleteBoardEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app) =>
-        app.MapDelete("/boards/{id:int}", HandleEndpoint);
+    // public static void MapEndpoint(IEndpointRouteBuilder app) =>
+    //     app.MapDelete("/boards/{id:int}", HandleEndpoint);
 
+    [MapDelete("/project-board/boards/{id:int}")]
     public static async Task<DeleteBoardResult> HandleEndpoint(
         [AsParameters] DeleteBoardRequest request,
         IDeleteBoardHandler handler,

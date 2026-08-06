@@ -2,21 +2,16 @@ using Microsoft.EntityFrameworkCore;
 using MyManager.Attributes;
 using MyManager.Common;
 using MyManager.Common.Extensions;
+using MyManager.Http;
 using MyManager.Modules.ProjectBoard.Domain.Entities;
 using MyManager.Modules.ProjectBoard.Domain.Errors;
 
 namespace MyManager.Modules.ProjectBoard.Features.Boards.CreateBoard;
 
-public interface ICreateBoardHandler
-{
-    Task<Result<CreateBoardResponse>> HandleCommand(CreateBoardCommand command,
-        CancellationToken ct = default);
-}
-
 [RegisterScoped]
-public sealed class CreateBoardHandler(ProjectBoardDbContext db) : ICreateBoardHandler
+public sealed class CreateBoardHandler(ProjectBoardDbContext db) : IRequestHandler<CreateBoardCommand, Result<CreateBoardResponse>>
 {
-    public async Task<Result<CreateBoardResponse>> HandleCommand(CreateBoardCommand command,
+    public async Task<Result<CreateBoardResponse>> Handle(CreateBoardCommand command,
         CancellationToken ct = default)
     {
         var boardExists = await db.Boards.Where(b => b.Name == command.Name).AnyAsync(ct);

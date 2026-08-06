@@ -1,21 +1,24 @@
 namespace MyManager.Http;
 
-public interface IEndpointHandler<in TRequest, TResponse>
+public interface IServices;
+
+public interface IEndpointHandler<in TRequest, in TServices, TResponse> where TServices : IServices
 {
-    static abstract Task<TResponse> Handle(TRequest request, CancellationToken ct = default);
+    static abstract Task<TResponse> HandleEndpoint(TRequest request, TServices services, CancellationToken ct = default);
 }
+
+public interface IEndpointHandler<in TServices, TResponse> where TServices : IServices
+{
+    static abstract Task<TResponse> HandleEndpoint(TServices services, CancellationToken ct = default);
+}
+
 
 public interface IEndpointHandler<TResponse>
 {
-    static abstract Task<TResponse> Handle(CancellationToken ct = default);
+    static abstract Task<TResponse> HandleEndpoint(CancellationToken ct = default);
 }
 
-public interface Ep
+public interface IEndpointHandler
 {
-    public interface Req<TRequest>
-    {
-        public interface Res<TResponse> : IEndpointHandler<TRequest, TResponse>;
-    }
-
-    public interface Res<TResponse> : IEndpointHandler<TResponse>;
+    static abstract Task HandleEndpoint(CancellationToken ct = default);
 }
