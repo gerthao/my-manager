@@ -8,21 +8,17 @@ namespace MyManager.Modules.ProjectBoard.Features.Boards.DeleteBoard;
 
 using DeleteBoardResult = Results<BadRequest<ErrorDetails>, NoContent>;
 
-public abstract class DeleteBoardEndpoint
+public static class DeleteBoardEndpoint
 {
-    // public static void MapEndpoint(IEndpointRouteBuilder app) =>
-    //     app.MapDelete("/boards/{id:int}", HandleEndpoint);
-
-    [MapDelete("/project-board/boards/{id:int}")]
+    [MapDelete("/project-board/boards/{id:int}", "DeleteBoard")]
     public static async Task<DeleteBoardResult> HandleEndpoint(
         [AsParameters] DeleteBoardRequest request,
-        IDeleteBoardHandler handler,
-        ILogger<ProjectBoardModule> logger,
+        [AsParameters] DeleteBoardServices services,
         CancellationToken ct = default
     )
     {
         var command = new DeleteBoardCommand(request.Id);
-        var result = await handler.HandleCommand(command, ct);
+        var result = await services.Handler.HandleCommand(command, ct);
 
         return result.Fold<DeleteBoardResult>(
             errors =>
@@ -31,7 +27,7 @@ public abstract class DeleteBoardEndpoint
                     .Pipe(TypedResults.BadRequest),
             success =>
                 success
-                    .Tap(s => DeleteBoardLogs.LogDeleted(logger, s.Id, s.Slug))
+                    .Tap(s => DeleteBoardLogs.LogDeleted(services.Logger, s.Id, s.Slug))
                     .Pipe(_ => TypedResults.NoContent())
         );
     }

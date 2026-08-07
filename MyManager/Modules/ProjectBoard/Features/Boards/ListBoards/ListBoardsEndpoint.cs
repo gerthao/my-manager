@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using MyManager.Attributes;
 using MyManager.Common;
 using MyManager.Common.Extensions;
 using MyManager.Http;
@@ -8,16 +9,15 @@ namespace MyManager.Modules.ProjectBoard.Features.Boards.ListBoards;
 
 using ListBoardsResult = Results<BadRequest<ErrorDetails>, Ok<List<ListBoardsResponse>>>;
 
-public abstract class ListBoardsEndpoint : IEndpoint
+public static class ListBoardsEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
-        => app.MapGet("/boards", HandleEndpoint);
-
+    [MapGet("/project-board/boards", "ListBoards")]
     public static async Task<ListBoardsResult> HandleEndpoint(
-        [FromServices] IListBoardsHandler handler,
+        [AsParameters] ListBoardsQuery query,
+        [AsParameters] ListBoardServices services,
         CancellationToken ct = default)
     {
-        var result = await handler.HandleQuery(ct);
+        var result = await services.Handler.Handle(query, ct);
 
         return result.Fold<ListBoardsResult>(
             error => error.Pipe(ErrorDetails.GlobalErrorOnly).Pipe(TypedResults.BadRequest),

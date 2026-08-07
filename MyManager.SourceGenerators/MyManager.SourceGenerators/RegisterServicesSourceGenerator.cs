@@ -123,7 +123,7 @@ public sealed class RegisterServicesSourceGenerator : IIncrementalGenerator
             }
         }
 
-        var registrationsString = string.Join("\n", registrations);
+        var registrationsString = string.Join("\n        ", registrations);
 
         // Build up the source code
         var code =

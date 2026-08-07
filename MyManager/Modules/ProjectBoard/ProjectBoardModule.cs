@@ -17,11 +17,11 @@ public sealed class ProjectBoardModule : IModule
     {
         var group = app.MapGroup(Prefix);
 
-        ListBoardsEndpoint.MapEndpoint(group);
+        // ListBoardsEndpoint.MapEndpoint(group);
         // CreateBoardEndpoint.MapEndpoint(group);
         GetBoardBySlugEndpoint.MapEndpoint(group);
         GetBoardByIdEndpoint.MapEndpoint(group);
-        UpdateBoardEndpoint.MapEndpoint(group);
+        // UpdateBoardEndpoint.MapEndpoint(group);
         // DeleteBoardEndpoint.MapEndpoint(group);
     }
 

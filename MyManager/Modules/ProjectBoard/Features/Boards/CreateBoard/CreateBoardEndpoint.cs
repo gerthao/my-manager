@@ -9,23 +9,23 @@ using CreateBoardResult = Results<BadRequest<ErrorDetails>, Conflict<ErrorDetail
 
 public static class CreateBoardEndpoint
 {
-    [MapPost( "/project-board/boards")]
+    [MapPost( "/project-board/boards", "CreateBoard")]
     public static Task<CreateBoardResult> HandleEndpoint(
         [AsParameters] CreateBoardRequest request,
         [AsParameters] CreateBoardServices services,
         CancellationToken ct = default
     ) =>
-        services.validator.Validate(request).FoldAsync(
+        services.Validator.Validate(request).FoldAsync(
             errors => errors
                 .Pipe(ErrorDetails.FieldErrorOnly)
                 .Pipe(TypedResults.BadRequest),
-            async command => (await services.handler.Handle(command, ct)).Fold<CreateBoardResult>(
+            async command => (await services.Handler.Handle(command, ct)).Fold<CreateBoardResult>(
                 error => error
                     .Pipe(ErrorDetails.GlobalErrorOnly)
                     .Pipe(TypedResults.Conflict),
                 response =>
                     response
-                        .Tap(r => CreateBoardLogs.LogCreated(services.logger, r.Id, r.Slug))
+                        .Tap(r => CreateBoardLogs.LogCreated(services.Logger, r.Id, r.Slug))
                         .Pipe(r => TypedResults.Created($"/boards/{r.Slug}", r))
             )
         );
