@@ -6,6 +6,9 @@ namespace MyManager.Modules.ProjectBoard.Features.Columns.CreateColumn;
 [RegisterSingleton(typeof(IValidator<CreateColumnRequest, CreateColumnCommand>))]
 public sealed class CreateColumnValidator : IValidator<CreateColumnRequest, CreateColumnCommand>
 {
+    public Validated<ValidationError, CreateColumnCommand> Validate(CreateColumnRequest request) =>
+        ValidateName(request.Body.Name).Map(name => new CreateColumnCommand(request.BoardId, name));
+
     private static Validated<ValidationError, string> ValidateName(string name)
     {
         var trimmed = name.Trim();
@@ -17,7 +20,4 @@ public sealed class CreateColumnValidator : IValidator<CreateColumnRequest, Crea
             _ => trimmed,
         };
     }
-
-    public Validated<ValidationError, CreateColumnCommand> Validate(CreateColumnRequest request) =>
-        ValidateName(request.Body.Name).Map(name => new CreateColumnCommand(request.BoardId, name));
 }

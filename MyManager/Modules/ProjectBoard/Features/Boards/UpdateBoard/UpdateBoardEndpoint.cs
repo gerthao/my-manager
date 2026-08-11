@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Http.HttpResults;
-using MyManager.Attributes;
 using MyManager.Common;
 using MyManager.Common.Extensions;
-using MyManager.Http;
 using MyManager.Routing.Attributes;
 
 namespace MyManager.Modules.ProjectBoard.Features.Boards.UpdateBoard;

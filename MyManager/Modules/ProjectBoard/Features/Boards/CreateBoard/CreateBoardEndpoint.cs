@@ -9,7 +9,7 @@ using CreateBoardResult = Results<BadRequest<ErrorDetails>, Conflict<ErrorDetail
 
 public static class CreateBoardEndpoint
 {
-    [MapPost( "/project-board/boards")]
+    [MapPost("/project-board/boards")]
     [WithName("CreateBoard")]
     [WithDescription("Create board")]
     [WithTags("Boards")]

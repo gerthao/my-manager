@@ -11,7 +11,8 @@ public interface IListBoardsHandler
 }
 
 [RegisterScoped]
-public sealed class ListBoardsHandler(ProjectBoardDbContext db) : IRequestHandler<ListBoardsQuery, Result<List<ListBoardsResponse>>>
+public sealed class ListBoardsHandler(ProjectBoardDbContext db)
+    : IRequestHandler<ListBoardsQuery, Result<List<ListBoardsResponse>>>
 {
     public async Task<Result<List<ListBoardsResponse>>> Handle(ListBoardsQuery query, CancellationToken ct = default)
     {

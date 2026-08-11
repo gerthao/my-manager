@@ -14,7 +14,8 @@ public interface IUpdateBoardHandler
 }
 
 [RegisterScoped]
-public sealed class UpdateBoardHandler(ProjectBoardDbContext db) : IRequestHandler<UpdateBoardCommand, Result<UpdateBoardResponse>>
+public sealed class UpdateBoardHandler(ProjectBoardDbContext db)
+    : IRequestHandler<UpdateBoardCommand, Result<UpdateBoardResponse>>
 {
     public async Task<Result<UpdateBoardResponse>> Handle(UpdateBoardCommand command,
         CancellationToken ct = default)

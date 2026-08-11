@@ -9,7 +9,8 @@ using MyManager.Modules.ProjectBoard.Domain.Errors;
 namespace MyManager.Modules.ProjectBoard.Features.Boards.CreateBoard;
 
 [RegisterScoped]
-public sealed class CreateBoardHandler(ProjectBoardDbContext db) : IRequestHandler<CreateBoardCommand, Result<CreateBoardResponse>>
+public sealed class CreateBoardHandler(ProjectBoardDbContext db)
+    : IRequestHandler<CreateBoardCommand, Result<CreateBoardResponse>>
 {
     public async Task<Result<CreateBoardResponse>> Handle(CreateBoardCommand command,
         CancellationToken ct = default)

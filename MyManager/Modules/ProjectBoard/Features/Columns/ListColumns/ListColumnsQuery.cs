@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MyManager.Attributes;
+﻿using MyManager.Attributes;
 
 namespace MyManager.Modules.ProjectBoard.Features.Columns.ListColumns;
 

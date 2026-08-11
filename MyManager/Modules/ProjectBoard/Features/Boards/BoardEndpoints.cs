@@ -1,9 +1,9 @@
 ﻿using MyManager.Modules.ProjectBoard.Features.Boards.CreateBoard;
 using MyManager.Modules.ProjectBoard.Features.Boards.DeleteBoard;
-using MyManager.Modules.ProjectBoard.Features.Boards.ListBoards;
-using MyManager.Modules.ProjectBoard.Features.Boards.UpdateBoard;
 using MyManager.Modules.ProjectBoard.Features.Boards.GetBoardById;
 using MyManager.Modules.ProjectBoard.Features.Boards.GetBoardBySlug;
+using MyManager.Modules.ProjectBoard.Features.Boards.ListBoards;
+using MyManager.Modules.ProjectBoard.Features.Boards.UpdateBoard;
 
 namespace MyManager.Modules.ProjectBoard.Features.Boards;
 
