@@ -3,19 +3,21 @@ using MyManager.Attributes;
 using MyManager.Common;
 using MyManager.Common.Extensions;
 using MyManager.Http;
+using MyManager.Routing.Attributes;
 
 namespace MyManager.Modules.ProjectBoard.Features.Boards.UpdateBoard;
 
-using UpdateBoardEndpointResult = Results<BadRequest<ErrorDetails>, Ok<UpdateBoardResponse>>;
+using UpdateBoardEndpointResult = Results<
+    BadRequest<ErrorDetails>,
+    Ok<UpdateBoardResponse>
+>;
 
-public abstract class UpdateBoardEndpoint : IEndpoint
+public static class UpdateBoardEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app) =>
-        app.MapPut("/boards/{id}", HandleEndpoint)
-            .WithName(nameof(UpdateBoardEndpoint))
-        ;
-
-    [MapPut("/project-board/boards/{id}", "UpdateBoard")]
+    [MapPut("/project-board/boards/{id:int}")]
+    [WithTags("Boards")]
+    [WithName("UpdateBoard")]
+    [WithDescription("Update board")]
     public static Task<UpdateBoardEndpointResult> HandleEndpoint(
         [AsParameters] UpdateBoardRequest request,
         [AsParameters] UpdateBoardServices services,

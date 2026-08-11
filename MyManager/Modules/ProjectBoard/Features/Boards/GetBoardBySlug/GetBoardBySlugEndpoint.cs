@@ -1,19 +1,18 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using MyManager.Common;
 using MyManager.Common.Extensions;
-using MyManager.Http;
+using MyManager.Routing.Attributes;
 
 namespace MyManager.Modules.ProjectBoard.Features.Boards.GetBoardBySlug;
 
 using GetBoardBySlugResult = Results<NotFound<ErrorDetails>, Ok<GetBoardBySlugResponse>>;
 
-public abstract class GetBoardBySlugEndpoint : IEndpoint
+public static class GetBoardBySlugEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app) =>
-        app
-            .MapGet("/boards/{slug}-{id:int}", HandleEndpoint)
-            .WithName(nameof(GetBoardBySlugEndpoint));
-
+    [MapGet("/project-board/boards/{slug}-{id:int}")]
+    [WithName("GetBoardBySlug")]
+    [WithDescription("Get board by slug")]
+    [WithTags("Boards")]
     public static async Task<GetBoardBySlugResult> HandleEndpoint(
         [AsParameters] GetBoardBySlugRequest request,
         IGetBoardBySlugHandler handler,

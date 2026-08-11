@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
-using MyManager.Attributes;
 using MyManager.Common;
 using MyManager.Common.Extensions;
+using MyManager.Routing.Attributes;
 
 namespace MyManager.Modules.ProjectBoard.Features.Boards.CreateBoard;
 
@@ -9,7 +9,10 @@ using CreateBoardResult = Results<BadRequest<ErrorDetails>, Conflict<ErrorDetail
 
 public static class CreateBoardEndpoint
 {
-    [MapPost( "/project-board/boards", "CreateBoard")]
+    [MapPost( "/project-board/boards")]
+    [WithName("CreateBoard")]
+    [WithDescription("Create board")]
+    [WithTags("Boards")]
     public static Task<CreateBoardResult> HandleEndpoint(
         [AsParameters] CreateBoardRequest request,
         [AsParameters] CreateBoardServices services,

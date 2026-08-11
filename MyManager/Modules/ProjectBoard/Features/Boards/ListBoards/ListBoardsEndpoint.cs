@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using MyManager.Attributes;
 using MyManager.Common;
 using MyManager.Common.Extensions;
-using MyManager.Http;
+using MyManager.Routing.Attributes;
 
 namespace MyManager.Modules.ProjectBoard.Features.Boards.ListBoards;
 
@@ -11,7 +9,10 @@ using ListBoardsResult = Results<BadRequest<ErrorDetails>, Ok<List<ListBoardsRes
 
 public static class ListBoardsEndpoint
 {
-    [MapGet("/project-board/boards", "ListBoards")]
+    [MapGet("/project-board/boards")]
+    [WithName("ListBoards")]
+    [WithDescription("List boards")]
+    [WithTags("Boards")]
     public static async Task<ListBoardsResult> HandleEndpoint(
         [AsParameters] ListBoardsQuery query,
         [AsParameters] ListBoardServices services,
