@@ -11,7 +11,7 @@ public static class ListBoardsEndpoint
 {
     [MapGet("/project-board/boards")]
     [WithName("ListBoards")]
-    [WithDescription("List boards")]
+    [WithSummary("List boards")]
     [WithTags("Boards")]
     public static async Task<ListBoardsResult> HandleEndpoint(
         [AsParameters] ListBoardsQuery query,

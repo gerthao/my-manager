@@ -12,7 +12,7 @@ public static class GetBoardByIdEndpoint
 {
     [MapGet("/project-board/boards/{id:int}")]
     [WithName("GetBoardById")]
-    [WithDescription("Get board by id")]
+    [WithSummary("Gets an board by ID")]
     [WithTags("Boards")]
     public static async Task<GetBoardByIdResult> HandleEndpoint(
         [AsParameters] GetBoardByIdRequest request,

@@ -15,7 +15,7 @@ public static class UpdateBoardEndpoint
     [MapPut("/project-board/boards/{id:int}")]
     [WithTags("Boards")]
     [WithName("UpdateBoard")]
-    [WithDescription("Update board")]
+    [WithSummary("Updates an existing board")]
     public static Task<UpdateBoardEndpointResult> HandleEndpoint(
         [AsParameters] UpdateBoardRequest request,
         [AsParameters] UpdateBoardServices services,

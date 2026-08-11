@@ -78,3 +78,15 @@ public sealed class AddEndpointFilterAttribute<T>() : Attribute where T: IEndpoi
 
 [AttributeUsage(AttributeTargets.Method)]
 public sealed class AllowAnonymousAttribute(): Attribute;
+
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+public sealed class ProducesAttribute(int statusCode): Attribute
+{
+    public int StatusCode { get; } = statusCode;
+}
+
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+public sealed class ProducesAttribute<T>(int statusCode): Attribute
+{
+    public int StatusCode { get; } = statusCode;
+}

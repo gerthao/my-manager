@@ -11,7 +11,7 @@ public static class GetBoardBySlugEndpoint
 {
     [MapGet("/project-board/boards/{slug}-{id:int}")]
     [WithName("GetBoardBySlug")]
-    [WithDescription("Get board by slug")]
+    [WithSummary("Gets a board by slug and ID")]
     [WithTags("Boards")]
     public static async Task<GetBoardBySlugResult> HandleEndpoint(
         [AsParameters] GetBoardBySlugRequest request,

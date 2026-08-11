@@ -134,60 +134,62 @@ public sealed class MapRouteSourceGenerator : IIncrementalGenerator
             {
                 var displayString = a.AttributeClass.ToDisplayString();
 
-                switch (displayString)
+                sb.AppendLine("// " + displayString);
+
+                if (displayString == "MyManager.Routing.Attributes.WithNameAttribute")
                 {
-                    case "MyManager.Routing.Attributes.WithNameAttribute":
+                    var value = a.ConstructorArguments.ElementAt(0).Value as string;
+                    sb.AppendLine($"            .WithName(\"{value}\")");
+                }
+                else if (displayString == "MyManager.Routing.Attributes.WithDisplayNameAttribute")
+                {
+                    var value = a.ConstructorArguments.ElementAt(0).Value as string;
+                    sb.AppendLine($"            .WithDisplayName(\"{value}\")");
+                }
+                else if (displayString == "MyManager.Routing.Attributes.WithDescriptionAttribute")
+                {
+                    var value = a.ConstructorArguments.ElementAt(0).Value as string;
+                    sb.AppendLine($"            .WithDescription(\"{value}\")");
+                }
+                else if (displayString == "MyManager.Routing.Attributes.WithOrderAttribute")
+                {
+                    var value = (int)a.ConstructorArguments.ElementAt(0).Value;
+                    sb.AppendLine($"            .WithOrder({value})");
+                }
+                else if (displayString == "MyManager.Routing.Attributes.WithSummaryAttribute")
+                {
+                    var value = a.ConstructorArguments.ElementAt(0).Value as string;
+                    sb.AppendLine($"            .WithSummary(\"{value}\")");
+                }
+                else if (displayString == "MyManager.Routing.Attributes.WithGroupNameAttribute")
+                {
+                    var value = a.ConstructorArguments.ElementAt(0).Value as string;
+                    sb.AppendLine($"            .WithGroupName(\"{value}\")");
+                }
+                else if (displayString == "MyManager.Routing.Attributes.WithTagsAttribute")
+                {
+                    var values = a.ConstructorArguments.ElementAt(0).Values.Select(x => $"\"{x.Value as string}\"");
+                    sb.AppendLine($"            .WithTags({string.Join(", ", values)})");
+                }
+                else if (displayString == "MyManager.Routing.Attributes.AllowAnonymousAttribute")
+                {
+                    sb.AppendLine($"            .AllowAnonymous()");
+                }
+                else if (displayString.Contains("MyManager.Routing.Attributes.AddEndpointFilterAttribute"))
+                {
+                    var value = a.AttributeClass.TypeParameters.First().ToDisplayString();
+                    sb.AppendLine($"            .AddEndpointFilter<{value}>()");
+                }
+                else if (displayString.Contains("MyManager.Routing.Attributes.ProducesAttribute"))
+                {
+                    var value = (int)a.ConstructorArguments.ElementAt(0).Value;
+
+                    if (!a.AttributeClass.IsGenericType)
+                        sb.AppendLine($"            .Produces({value})");
+                    else
                     {
-                        var value = a.ConstructorArguments.ElementAt(0).Value as string;
-                        sb.AppendLine($"            .WithName(\"{value}\")");
-                        break;
-                    }
-                    case "MyManager.Routing.Attributes.WithDisplayNameAttribute":
-                    {
-                        var value = a.ConstructorArguments.ElementAt(0).Value as string;
-                        sb.AppendLine($"            .WithDisplayName(\"{value}\")");
-                        break;
-                    }
-                    case "MyManager.Routing.Attributes.WithDescriptionAttribute":
-                    {
-                        var value = a.ConstructorArguments.ElementAt(0).Value as string;
-                        sb.AppendLine($"            .WithDescription(\"{value}\")");
-                        break;
-                    }
-                    case "MyManager.Routing.Attributes.WithOrderAttribute":
-                    {
-                        var value = (int)a.ConstructorArguments.ElementAt(0).Value;
-                        sb.AppendLine($"            .WithOrder({value})");
-                        break;
-                    }
-                    case "MyManager.Routing.Attributes.WithSummaryAttribute":
-                    {
-                        var value = a.ConstructorArguments.ElementAt(0).Value as string;
-                        sb.AppendLine($"            .WithSummary(\"{value}\")");
-                        break;
-                    }
-                    case "MyManager.Routing.Attributes.WithGroupNameAttribute":
-                    {
-                        var value = a.ConstructorArguments.ElementAt(0).Value as string;
-                        sb.AppendLine($"            .WithGroupName(\"{value}\")");
-                        break;
-                    }
-                    case "MyManager.Routing.Attributes.WithTagsAttribute":
-                    {
-                        var values = a.ConstructorArguments.ElementAt(0).Values.Select(x => $"\"{x.Value as string}\"");
-                        sb.AppendLine($"            .WithTags({string.Join(", ", values)})");
-                        break;
-                    }
-                    case "MyManager.Routing.Attributes.AllowAnonymousAttribute":
-                    {
-                        sb.AppendLine($"            .AllowAnonymous()");
-                        break;
-                    }
-                    case "MyManager.Routing.Attributes.AddEndpointFilterAttribute":
-                    {
-                        var value = a.AttributeClass.TypeParameters.First().Name;
-                        sb.AppendLine($"            .AddEndpointFilter<{value}>()");
-                        break;
+                        var type = a.AttributeClass.TypeArguments.First().ToDisplayString();
+                        sb.AppendLine($"            .Produces<{type}>({value})");
                     }
                 }
             }

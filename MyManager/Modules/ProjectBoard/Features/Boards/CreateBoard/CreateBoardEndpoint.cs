@@ -11,7 +11,7 @@ public static class CreateBoardEndpoint
 {
     [MapPost("/project-board/boards")]
     [WithName("CreateBoard")]
-    [WithDescription("Create board")]
+    [WithSummary("Creates a new board")]
     [WithTags("Boards")]
     public static Task<CreateBoardResult> HandleEndpoint(
         [AsParameters] CreateBoardRequest request,

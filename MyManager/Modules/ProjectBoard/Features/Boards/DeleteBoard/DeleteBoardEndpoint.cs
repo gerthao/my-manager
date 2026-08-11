@@ -11,7 +11,7 @@ public static class DeleteBoardEndpoint
 {
     [MapDelete("/project-board/boards/{id:int}")]
     [WithName("DeleteBoard")]
-    [WithDescription("Delete board")]
+    [WithSummary("Deletes an existing board")]
     [WithTags("Boards")]
     public static async Task<DeleteBoardResult> HandleEndpoint(
         [AsParameters] DeleteBoardRequest request,
