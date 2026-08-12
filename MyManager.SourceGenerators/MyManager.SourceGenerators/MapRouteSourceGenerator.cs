@@ -126,15 +126,16 @@ public sealed class MapRouteSourceGenerator : IIncrementalGenerator
             var methodName = symbol.Name;
             var namespaceName = symbol.ContainingType?.ToDisplayString();
 
-            var handler = compilation.GetSemanticModel(syntax.SyntaxTree);
             sb.AppendLine($"        app");
             sb.AppendLine($"            .{verb}(\"{pattern}\", {namespaceName}.{methodName})");
 
             foreach (var a in otherAttributes)
             {
+                if (a.AttributeClass is null) continue;
+
                 var displayString = a.AttributeClass.ToDisplayString();
 
-                sb.AppendLine("// " + displayString);
+                // sb.AppendLine("// " + displayString);
 
                 if (displayString == "MyManager.Routing.Attributes.WithNameAttribute")
                 {
@@ -153,7 +154,7 @@ public sealed class MapRouteSourceGenerator : IIncrementalGenerator
                 }
                 else if (displayString == "MyManager.Routing.Attributes.WithOrderAttribute")
                 {
-                    var value = (int)a.ConstructorArguments.ElementAt(0).Value;
+                    var value = a.ConstructorArguments.ElementAt(0).Value as string;
                     sb.AppendLine($"            .WithOrder({value})");
                 }
                 else if (displayString == "MyManager.Routing.Attributes.WithSummaryAttribute")
@@ -182,7 +183,7 @@ public sealed class MapRouteSourceGenerator : IIncrementalGenerator
                 }
                 else if (displayString.Contains("MyManager.Routing.Attributes.ProducesAttribute"))
                 {
-                    var value = (int)a.ConstructorArguments.ElementAt(0).Value;
+                    var value = a.ConstructorArguments.ElementAt(0).Value as string;
 
                     if (!a.AttributeClass.IsGenericType)
                         sb.AppendLine($"            .Produces({value})");

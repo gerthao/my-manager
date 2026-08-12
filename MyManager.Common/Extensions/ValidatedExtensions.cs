@@ -98,7 +98,7 @@ public static class ValidatedExtensions
             if (@this.Item1 is Invalid<TE, T1> i1) errors.AddRange(i1.Errors);
             if (@this.Item2 is Invalid<TE, T2> i2) errors.AddRange(i2.Errors);
 
-            return NonEmptyList<TE>.Of(errors[0], errors.Skip(1).ToArray());
+            return NonEmptyList<TE>.Of(errors[0], [.. errors.Skip(1)]);
         }
     }
 
@@ -161,7 +161,7 @@ public static class ValidatedExtensions
             if (@this.Item3 is Invalid<TE, T3> i3) errors.AddRange(i3.Errors);
             if (@this.Item4 is Invalid<TE, T4> i4) errors.AddRange(i4.Errors);
 
-            return NonEmptyList<TE>.Of(errors[0], errors.Skip(1).ToArray());
+            return NonEmptyList<TE>.Of(errors[0], [.. errors.Skip(1)]);
         }
     }
 
@@ -200,7 +200,7 @@ public static class ValidatedExtensions
             if (@this.Item4 is Invalid<TE, T4> i4) errors.AddRange(i4.Errors);
             if (@this.Item5 is Invalid<TE, T4> i5) errors.AddRange(i5.Errors);
 
-            return NonEmptyList<TE>.Of(errors[0], errors.Skip(1).ToArray());
+            return NonEmptyList<TE>.Of(errors[0], [.. errors.Skip(1)]);
         }
     }
 
@@ -243,7 +243,7 @@ public static class ValidatedExtensions
             if (@this.Item5 is Invalid<TE, T4> i5) errors.AddRange(i5.Errors);
             if (@this.Item6 is Invalid<TE, T4> i6) errors.AddRange(i6.Errors);
 
-            return NonEmptyList<TE>.Of(errors[0], errors.Skip(1).ToArray());
+            return NonEmptyList<TE>.Of(errors[0], [.. errors.Skip(1)]);
         }
     }
 
@@ -290,7 +290,7 @@ public static class ValidatedExtensions
             if (@this.Item6 is Invalid<TE, T4> i6) errors.AddRange(i6.Errors);
             if (@this.Item7 is Invalid<TE, T4> i7) errors.AddRange(i7.Errors);
 
-            return NonEmptyList<TE>.Of(errors[0], errors.Skip(1).ToArray());
+            return NonEmptyList<TE>.Of(errors[0], [.. errors.Skip(1)]);
         }
     }
 
@@ -341,7 +341,7 @@ public static class ValidatedExtensions
             if (@this.Item7 is Invalid<TE, T4> i7) errors.AddRange(i7.Errors);
             if (@this.Item8 is Invalid<TE, T4> i8) errors.AddRange(i8.Errors);
 
-            return NonEmptyList<TE>.Of(errors[0], errors.Skip(1).ToArray());
+            return NonEmptyList<TE>.Of(errors[0], [.. errors.Skip(1)]);
         }
     }
 }

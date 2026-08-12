@@ -157,10 +157,10 @@ public abstract record Validated<TE, TA>
     public Validated<TE, TB> ZipRight<TB>(Validated<TE, TB> that) where TB : notnull => Apply(that, (_, b) => b);
 }
 
-public record Valid<TE, TA>(TA Value) : Validated<TE, TA>
+public sealed record Valid<TE, TA>(TA Value) : Validated<TE, TA>
     where TE : notnull
     where TA : notnull;
 
-public record Invalid<TE, TA>(NonEmptyList<TE> Errors) : Validated<TE, TA>
+public sealed record Invalid<TE, TA>(NonEmptyList<TE> Errors) : Validated<TE, TA>
     where TE : notnull
     where TA : notnull;

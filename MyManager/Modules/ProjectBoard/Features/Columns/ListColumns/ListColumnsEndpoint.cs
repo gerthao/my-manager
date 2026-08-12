@@ -1,20 +1,19 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using MyManager.Common;
 using MyManager.Common.Extensions;
-using MyManager.Http;
+using MyManager.Routing.Attributes;
 
 namespace MyManager.Modules.ProjectBoard.Features.Columns.ListColumns;
 
 using ListColumnsResult = Results<BadRequest<ErrorDetails>, Ok<List<ListColumnsResponse>>>;
 
-public sealed class ListColumnsEndpoint : IEndpoint
+public static class ListColumnsEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
-    {
-        app.MapGet("/boards/{boardId:int}/columns", HandleEndpoint);
-    }
-
-    private static async Task<ListColumnsResult> HandleEndpoint(
+    [MapGet("/boards/{boardId:int}/columns")]
+    [WithName("ListColumns")]
+    [WithTags("Columns")]
+    [WithSummary("List columns for a board")]
+    public static async Task<ListColumnsResult> HandleEndpoint(
         [AsParameters] ListColumnsRequest request,
         IListColumnsHandler handler,
         CancellationToken ct = default

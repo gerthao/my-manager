@@ -1,20 +1,19 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using MyManager.Common;
 using MyManager.Common.Extensions;
-using MyManager.Http;
+using MyManager.Routing.Attributes;
 
 namespace MyManager.Modules.ProjectBoard.Features.Columns.CreateColumn;
 
 using CreateColumnResult = Results<BadRequest<ErrorDetails>, Conflict<ErrorDetails>, Created<CreateColumnResponse>>;
 
-public sealed class CreateColumnEndpoint : IEndpoint
+public static class CreateColumnEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
-    {
-        app.MapPost("/boards/{boardId:int}/columns", HandleEndpoint);
-    }
-
-    private static Task<CreateColumnResult> HandleEndpoint(
+    [MapPost("/project-board/boards/{boardId:int}/columns")]
+    [WithName("CreateColumn")]
+    [WithTags("Columns")]
+    [WithSummary("Creates a new column for a project board.")]
+    public static Task<CreateColumnResult> HandleEndpoint(
         [AsParameters] CreateColumnRequest request,
         IValidator<CreateColumnRequest, CreateColumnCommand> validator,
         CreateColumnHandler handler,
@@ -25,8 +24,8 @@ public sealed class CreateColumnEndpoint : IEndpoint
             .Pipe(ErrorDetails.FieldErrorOnly)
             .Pipe(TypedResults.BadRequest),
         async command => (await handler.HandleCommand(command, ct))
-            .Pipe(r =>
-                r.Fold<CreateColumnResult>(
+            .Pipe(result =>
+                result.Fold<CreateColumnResult>(
                     error => error
                         .Pipe(ErrorDetails.GlobalErrorOnly)
                         .Pipe(TypedResults.Conflict),
