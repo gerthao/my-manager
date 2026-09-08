@@ -4,20 +4,19 @@ using MyManager.Common;
 using MyManager.Common.Extensions;
 using MyManager.Http;
 using MyManager.Modules.ProjectBoard.Domain.Entities;
-using MyManager.Modules.ProjectBoard.Domain.Errors;
 
 namespace MyManager.Modules.ProjectBoard.Features.Boards.CreateBoard;
 
 [RegisterScoped]
 public sealed class CreateBoardHandler(ProjectBoardDbContext db)
-    : IRequestHandler<CreateBoardCommand, Result<CreateBoardResponse>>
+    : IRequestHandler<CreateBoardCommand, Either<BoardAlreadyExists, CreateBoardResponse>>
 {
-    public async Task<Result<CreateBoardResponse>> Handle(CreateBoardCommand command,
+    public async Task<Either<BoardAlreadyExists, CreateBoardResponse>> Handle(CreateBoardCommand command,
         CancellationToken ct = default)
     {
         var boardExists = await db.Boards.Where(b => b.Name == command.Name).AnyAsync(ct);
         if (boardExists)
-            return BoardErrors.AlreadyExists(command.Name);
+            return new BoardAlreadyExists($"Board {command.Name} already exists!");
 
         var board = new Board
         {

@@ -4,7 +4,7 @@ public static class OptionExtensions
 {
     extension<T>(T? value) where T : notnull
     {
-        public Option<T> ToOption() => value ?? Option<T>.Empty;
+        public Option<T> ToOption() => value;
     }
 
     extension<TA, TB>(Option<(TA, TB)> option)
@@ -14,7 +14,7 @@ public static class OptionExtensions
         public (Option<TA>, Option<TB>) Unzip() => option switch
         {
             Some<(TA, TB)>(var (ta, tb)) => (new Some<TA>(ta), new Some<TB>(tb)),
-            _                            => (Option<TA>.Empty, Option<TB>.Empty),
+            _                            => (new None(), new None()),
         };
     }
 
@@ -59,16 +59,6 @@ public static class OptionExtensions
             value => [value]
         );
 
-        public Result<T> ToResult(Func<Error> fn) => option.Fold<Result<T>>(
-            () => fn(),
-            value => value
-        );
-
-        public Result<T> ToResult(Error error) => option.Fold<Result<T>>(
-            () => error,
-            value => value
-        );
-
         public Either<TL, T> ToRight<TL>(Func<TL> leftFn) where TL : notnull => option.Fold<Either<TL, T>>(
             () => leftFn(),
             value => value
@@ -97,7 +87,7 @@ public static class OptionExtensions
     extension<T>(Option<Option<T>> option) where T : notnull
     {
         public Option<T> Flatten() => option.Fold(
-            () => Option<T>.Empty,
+            () => new None(),
             innerOption => innerOption
         );
     }
@@ -138,7 +128,7 @@ public static class OptionExtensions
             return option switch
             {
                 Some<T>(var val) => await binder(val).ConfigureAwait(false),
-                _                => new None<TA>(),
+                _                => new None(),
             };
         }
 
@@ -161,7 +151,7 @@ public static class OptionExtensions
             return option switch
             {
                 Some<T>(var val) => new Some<TA>(await mapper(val).ConfigureAwait(false)),
-                _                => new None<TA>(),
+                _                => new None(),
             };
         }
 
@@ -182,12 +172,6 @@ public static class OptionExtensions
         {
             var option = await taskOption.ConfigureAwait(false);
             return option.ToList();
-        }
-
-        public async Task<Result<T>> ToResult(Func<Error> fn)
-        {
-            var option = await taskOption.ConfigureAwait(false);
-            return option.ToResult(fn);
         }
     }
 }

@@ -12,3 +12,5 @@ public static class BoardErrors
     public static Error NotFound(string slug) =>
         new("ProjectBoard.Board.NotFound", $"Project with slug {slug} not found");
 }
+
+public sealed record BoardNotFound(string Description);

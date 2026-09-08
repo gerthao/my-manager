@@ -2,5 +2,5 @@
 
 namespace MyManager.Modules.ProjectBoard.Features.Columns.CreateColumn;
 
-[Isomorph]
+[GenerateApply]
 public sealed partial record CreateColumnCommand(int BoardId, string Name);

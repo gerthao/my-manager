@@ -1,20 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using MyManager.Attributes;
 using MyManager.Common;
+using MyManager.Http;
 using MyManager.Modules.ProjectBoard.Domain.Errors;
 
 namespace MyManager.Modules.ProjectBoard.Features.Boards.GetBoardBySlug;
 
-public interface IGetBoardBySlugHandler
-{
-    Task<Result<GetBoardBySlugResponse>> HandleQuery(GetBoardBySlugQuery query,
-        CancellationToken ct = default);
-}
-
 [RegisterScoped]
-public sealed class GetBoardBySlugHandler(ProjectBoardDbContext db) : IGetBoardBySlugHandler
+public sealed class GetBoardBySlugHandler(ProjectBoardDbContext db)
+    : IRequestHandler<GetBoardBySlugQuery, Result<GetBoardBySlugResponse>>
 {
-    public async Task<Result<GetBoardBySlugResponse>> HandleQuery(GetBoardBySlugQuery query,
+    public async Task<Result<GetBoardBySlugResponse>> Handle(GetBoardBySlugQuery query,
         CancellationToken ct = default)
     {
         var board = await db.Boards.Where(b => b.Id == query.Id)

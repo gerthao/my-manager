@@ -15,12 +15,12 @@ public static class GetBoardBySlugEndpoint
     [WithTags("Boards")]
     public static async Task<GetBoardBySlugResult> HandleEndpoint(
         [AsParameters] GetBoardBySlugRequest request,
-        IGetBoardBySlugHandler handler,
+        [AsParameters] GetBoardBySlugServices services,
         CancellationToken ct = default
     )
     {
         var query = new GetBoardBySlugQuery(request.Id, request.Slug);
-        var result = await handler.HandleQuery(query, ct);
+        var result = await services.Handler.Handle(query, ct);
 
         return result.Fold<GetBoardBySlugResult>(
             error => error.Pipe(ErrorDetails.GlobalErrorOnly).Pipe(TypedResults.NotFound),

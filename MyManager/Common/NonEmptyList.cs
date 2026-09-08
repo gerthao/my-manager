@@ -20,33 +20,33 @@ public sealed record NonEmptyList<T>(T Head, IReadOnlyList<T> Tail) : IReadOnlyL
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-    public NonEmptyList<T> Append(T item) => new(Head, [..Tail, item]);
+    public NonEmptyList<T> Append(T item) => [with(Head, [.. Tail, item])];
 
     public NonEmptyList<T> Concat(NonEmptyList<T> other)
     {
         List<T> newTail = [..Tail, other.Head];
         newTail.AddRange(other.Tail);
-        return new NonEmptyList<T>(Head, newTail);
+        return [with(Head, newTail)];
     }
 
     public static Option<NonEmptyList<T>> FromArray(T[] array) =>
         array.Length != 0
-            ? new NonEmptyList<T>(array[0], array.Skip(1).ToArray())
-            : Option<NonEmptyList<T>>.Empty;
+            ? new NonEmptyList<T>(array[0], [.. array.Skip(1)])
+            : new None();
 
     public static Option<NonEmptyList<T>> FromList(List<T> list) =>
         list.Count != 0
-            ? new NonEmptyList<T>(list[0], list.Skip(1).ToArray())
-            : Option<NonEmptyList<T>>.Empty;
+            ? new NonEmptyList<T>(list[0], [.. list.Skip(1)])
+            : new None();
 
-    public static NonEmptyList<T> Of(T head, params T[] tail) => new(head, tail);
+    public static NonEmptyList<T> Of(T head, params T[] tail) => [with(head, tail)];
 
     public static NonEmptyList<T> OfInitLast(List<T> list, T lastItem) =>
-        new(list[0], list.Skip(1).Append(lastItem).ToArray());
+        [with(list[0], [.. list.Skip(1), lastItem])];
 
-    public static NonEmptyList<T> One(T item) => new(item);
+    public static NonEmptyList<T> One(T item) => [with(item)];
 
-    public NonEmptyList<T> Prepend(T item) => new(item, [Head, ..Tail]);
+    public NonEmptyList<T> Prepend(T item) => [with(item, [Head, .. Tail])];
 
     public T[] ToArray() => ToList().ToArray();
 

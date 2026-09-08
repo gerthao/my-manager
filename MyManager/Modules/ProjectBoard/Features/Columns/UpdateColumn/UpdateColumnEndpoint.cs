@@ -67,7 +67,7 @@ public sealed class UpdateColumnHandler(ProjectBoardDbContext db)
         var column =
             await db.Columns.FirstOrDefaultAsync(c => c.BoardId == request.BoardId && c.Id == request.ColumnId, ct);
 
-        if (column is null) return ColumnErrors.NotFound();
+        if (column is null) return new ColumnErrors.NotFound();
 
         column.Name = request.Name;
         column.Description = request.Description.OrNull();
@@ -81,6 +81,19 @@ public sealed class UpdateColumnHandler(ProjectBoardDbContext db)
 [RegisterSingleton]
 public sealed class UpdateColumnValidator : IValidator<UpdateColumnRequest, UpdateColumnCommand>
 {
+    public Validated<ValidationError, UpdateColumnCommand> Validate(UpdateColumnRequest request) =>
+    (
+        ValidateName(request.Body.Name),
+        ValidateDescription(request.Body.Description.ToOption())
+    ).MapN((name, description) => new UpdateColumnCommand(request.BoardId, request.ColumnId, name, description));
+
+    private static Validated<ValidationError, Option<string>> ValidateDescription(Option<string> description) =>
+        Validated<ValidationError, Option<string>>.Condition(
+            description is None || description.Exists(d => d.Trim().Length <= 255),
+            () => description.Map(d => d.Trim()).FilterNot(d => d == ""),
+            () => new ValidationError("description", "Board description cannot exceed 255 characters.")
+        );
+
     private static Validated<ValidationError, string> ValidateName(string name)
     {
         var n = name.Trim();
@@ -93,17 +106,4 @@ public sealed class UpdateColumnValidator : IValidator<UpdateColumnRequest, Upda
 
         return n;
     }
-
-    private static Validated<ValidationError, Option<string>> ValidateDescription(Option<string> description) =>
-        Validated<ValidationError, Option<string>>.Condition(
-            description.IsEmpty || description.Exists(d => d.Trim().Length <= 255),
-            () => description.Map(d => d.Trim()).FilterNot(d => d == ""),
-            () => new ValidationError("description", "Board description cannot exceed 255 characters.")
-        );
-
-    public Validated<ValidationError, UpdateColumnCommand> Validate(UpdateColumnRequest request) =>
-    (
-        ValidateName(request.Body.Name),
-        ValidateDescription(request.Body.Description.ToOption())
-    ).MapN((name, description) => new UpdateColumnCommand(request.BoardId, request.ColumnId, name, description));
 }

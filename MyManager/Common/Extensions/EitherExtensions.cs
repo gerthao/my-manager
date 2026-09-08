@@ -6,27 +6,22 @@ public static class EitherExtensions
 {
     extension<T>(T value) where T : notnull
     {
-        public Either<T, TR> ToLeft<TR>() where TR : notnull => new Left<T, TR>(value);
-        public Either<TL, T> ToRight<TL>() where TL : notnull => new Right<TL, T>(value);
+        public Either<T, TR> ToLeft<TR>() where TR : notnull => new Left<T>(value);
+        public Either<TL, T> ToRight<TL>() where TL : notnull => new Right<T>(value);
     }
 
     extension<TL, TR>(Either<TL, TR> either)
         where TL : notnull
         where TR : notnull
     {
-        public Option<TR> ToOption() => either.Fold(
-            _ => Option<TR>.Empty,
-            right => right
+        public Option<TR> ToOption() => either.Fold<Option<TR>>(
+            _ => new None(),
+            right => new Some<TR>(right)
         );
 
-        public Option<TL> ToOptionLeft() => either.Fold(
-            left => left,
-            _ => Option<TL>.Empty
-        );
-
-        public Result<TR> ToResult(Func<TL, Error> fn) => either.Fold<Result<TR>>(
-            left => fn(left),
-            right => right
+        public Option<TL> ToOptionLeft() => either.Fold<Option<TL>>(
+            left => new Some<TL>(left),
+            _ => new None()
         );
 
         public Task<Either<TL, TR>> ToTask() => Task.FromResult(either);
@@ -77,8 +72,8 @@ public static class EitherExtensions
 
             return either switch
             {
-                Left<TL, TR>(var left)   => left,
-                Right<TL, TR>(var right) => await binder(right).ConfigureAwait(false),
+                Left<TL>(var left)   => left,
+                Right<TR>(var right) => await binder(right).ConfigureAwait(false),
                 _                        => throw new UnreachableException(),
             };
         }
@@ -97,20 +92,6 @@ public static class EitherExtensions
             return either.GetOrElse(orElse);
         }
 
-        public async Task<bool> IsLeftAsync()
-        {
-            var either = await taskEither.ConfigureAwait(false);
-
-            return either.IsLeft;
-        }
-
-        public async Task<bool> IsRightAsync()
-        {
-            var either = await taskEither.ConfigureAwait(false);
-
-            return either.IsRight;
-        }
-
         public async Task<Either<TL, TR1>> MapAsync<TR1>(Func<TR, TR1> mapper) where TR1 : notnull
         {
             var either = await taskEither.ConfigureAwait(false);
@@ -124,8 +105,8 @@ public static class EitherExtensions
 
             return either switch
             {
-                Left<TL, TR> (var leftValue)   => new Left<TL, TR1>(leftValue),
-                Right<TL, TR> (var rightValue) => new Right<TL, TR1>(await mapper(rightValue).ConfigureAwait(false)),
+                Left<TL> (var leftValue)   => new Left<TL>(leftValue),
+                Right<TR> (var rightValue) => new Right<TR1>(await mapper(rightValue).ConfigureAwait(false)),
                 _                              => throw new UnreachableException(),
             };
         }

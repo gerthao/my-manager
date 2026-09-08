@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using MyManager.Common;
 using MyManager.Common.Extensions;
+using MyManager.Http;
 using MyManager.Routing.Attributes;
 
 namespace MyManager.Modules.ProjectBoard.Features.Columns.CreateColumn;
@@ -16,23 +17,21 @@ public static class CreateColumnEndpoint
     public static Task<CreateColumnResult> HandleEndpoint(
         [AsParameters] CreateColumnRequest request,
         IValidator<CreateColumnRequest, CreateColumnCommand> validator,
-        CreateColumnHandler handler,
+        IRequestHandler<CreateColumnCommand, Result<CreateColumnResponse>> handler,
         ILogger<ProjectBoardModule> logger,
         CancellationToken ct = default
     ) => validator.Validate(request).FoldAsync(
         errors => errors
             .Pipe(ErrorDetails.FieldErrorOnly)
             .Pipe(TypedResults.BadRequest),
-        async command => (await handler.HandleCommand(command, ct))
+        async command => (await handler.Handle(command, ct))
             .Pipe(result =>
                 result.Fold<CreateColumnResult>(
                     error => error
                         .Pipe(ErrorDetails.GlobalErrorOnly)
                         .Pipe(TypedResults.Conflict),
                     response => response
-                        .Pipe(r =>
-                            TypedResults.Created($"/boards/{r.BoardId}/columns/{r.Id}", r)
-                        )
+                        .Pipe(r => TypedResults.Created($"/project-board/boards/{r.BoardId}/columns/{r.Id}", r))
                 )
             )
     );

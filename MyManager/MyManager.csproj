@@ -1,16 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net10.0</TargetFramework>
+        <TargetFramework>net11.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <LangVersion>preview</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.8" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.8" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.8" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="11.0.0-preview.7.26381.103" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="11.0.0-preview.7.26381.103" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="11.0.0-preview.7.26381.103" />
     </ItemGroup>
 
     <ItemGroup>
@@ -20,8 +21,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MyManager.Attributes\MyManager.Attributes.csproj" />
-      <ProjectReference Include="..\MyManager.Common\MyManager.Common.csproj" />
       <ProjectReference 
               Include="..\MyManager.SourceGenerators\MyManager.SourceGenerators\MyManager.SourceGenerators.csproj"
               OutputItemType="Analyzer"

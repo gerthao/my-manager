@@ -1,9 +1,10 @@
-﻿using MyManager.Common;
+﻿using Microsoft.AspNetCore.Mvc;
+using MyManager.Common;
 using MyManager.Http;
 
 namespace MyManager.Modules.ProjectBoard.Features.Boards.GetBoardById;
 
 public readonly record struct GetBoardByIdServices(
-    IRequestHandler<GetBoardByIdQuery, Result<string>> Handler,
-    ILogger<ProjectBoardModule> Logger
+    [FromServices] IRequestHandler<GetBoardByIdQuery, Result<string>> Handler,
+    [FromServices] ILogger<ProjectBoardModule> Logger
 );

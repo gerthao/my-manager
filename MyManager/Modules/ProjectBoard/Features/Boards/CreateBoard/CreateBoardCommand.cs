@@ -3,5 +3,5 @@ using MyManager.Common;
 
 namespace MyManager.Modules.ProjectBoard.Features.Boards.CreateBoard;
 
-[Isomorph]
+[GenerateApply]
 public sealed partial record CreateBoardCommand(string Name, Option<string> Description);

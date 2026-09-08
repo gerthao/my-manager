@@ -2,5 +2,5 @@
 
 namespace MyManager.Modules.ProjectBoard.Features.Columns.ListColumns;
 
-[Isomorph]
+[GenerateApply]
 public sealed partial record ListColumnsQuery(int BoardId);

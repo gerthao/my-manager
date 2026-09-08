@@ -7,29 +7,33 @@ namespace MyManager.Modules.ProjectBoard.Features.Boards.UpdateBoard;
 [RegisterSingleton]
 public sealed class UpdateBoardValidator : IValidator<UpdateBoardRequest, UpdateBoardCommand>
 {
-    public Validated<ValidationError, UpdateBoardCommand> Validate(UpdateBoardRequest request) => (
+    public Validated<ValidationError, UpdateBoardCommand> Validate(UpdateBoardRequest request) =>
+    (
         ValidateName(request.Body.Name),
         ValidateDescription(request.Body.Description.ToOption())
     ).MapN((name, description) => new UpdateBoardCommand(request.Id, name, description));
 
     private static Validated<ValidationError, Option<string>> ValidateDescription(Option<string> description)
     {
+        var d = description.Map(d => d.Trim()).FilterNot(d => d == "");
+
         return Validated<ValidationError, Option<string>>.Condition(
-            description.IsEmpty || description.Exists(d => d.Trim().Length <= 255),
-            () => description.Map(d => d.Trim()).FilterNot(d => d == ""),
+            d is None || d.Exists(e => e.Trim().Length <= 255),
+            () => d,
             () => new ValidationError("description", "Board description cannot exceed 255 characters.")
         );
     }
 
-
     private static Validated<ValidationError, string> ValidateName(string name)
     {
-        if (string.IsNullOrWhiteSpace(name))
+        var n = name.Trim();
+
+        if (string.IsNullOrWhiteSpace(n))
             return new ValidationError("name", "Board name must be at least 1 character long.");
 
-        if (name.Length > 100)
+        if (n.Length > 100)
             return new ValidationError("name", "Board name cannot exceed 100 characters.");
 
-        return name.Trim();
+        return n;
     }
 }

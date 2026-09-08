@@ -22,8 +22,8 @@ public static class OptionLinqExtensions
         }
 
         public Option<T> Where(Func<T, bool> predicate) => option.Fold(
-            () => Option<T>.Empty,
-            value => predicate(value) ? option : Option<T>.Empty
+            () => new None(),
+            value => predicate(value) ? option : new None()
         );
     }
 
@@ -60,9 +60,9 @@ public static class OptionLinqExtensions
             taskOption.FlatMapAsync(val => binder(val).MapAsync(bindVal => resultSelector(val, bindVal)));
 
         public Task<Option<T>> Where(Func<T, bool> predicate) =>
-            taskOption.FoldAsync(
-                () => Option<T>.Empty,
-                value => predicate(value) ? value : Option<T>.Empty
+            taskOption.FoldAsync<T, Option<T>>(
+                () => new None(),
+                value => predicate(value) ? new Some<T>(value) : new None()
             );
     }
 }

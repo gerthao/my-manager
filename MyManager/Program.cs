@@ -8,6 +8,7 @@ builder.Services.AddOpenApi();
 builder.RegisterModuleServices();
 
 builder.Services.RegisterAutoServices();
+builder.Services.AddProblemDetails();
 
 var app = builder.Build();
 
@@ -18,8 +19,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseModuleMiddleware();
+app.UseStatusCodePages();
+app.UseExceptionHandler();
 
+app.UseModuleMiddleware();
 app.MapModuleEndpoints();
 app.RegisterRoutes();
 

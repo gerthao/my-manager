@@ -36,7 +36,6 @@ public sealed class ModuleSourceGenerator : IIncrementalGenerator
         if (classes.IsEmpty)
             return;
 
-
         var iModuleSymbol = compilation.GetTypeByMetadataName(ModuleFullName);
         if (iModuleSymbol is null)
             return;

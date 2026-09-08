@@ -12,12 +12,12 @@ public static class ResultExtensions
     extension<T>(Result<T> result) where T : notnull
     {
         public Either<Error, T> ToEither() => result.Fold<Either<Error, T>>(
-            error => new Left<Error, T>(error),
-            value => new Right<Error, T>(value)
+            error => new Left<Error>(error),
+            value => new Right<T>(value)
         );
 
         public Option<T> ToOption() => result.Fold<Option<T>>(
-            _ => new None<T>(),
+            _ => new None(),
             value => new Some<T>(value)
         );
 

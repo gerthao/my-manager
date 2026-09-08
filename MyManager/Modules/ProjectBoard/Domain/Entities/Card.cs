@@ -12,9 +12,9 @@ public sealed class Card : ICreateTimestampedEntity, IModifyTimestampedEntity
 
     public required string? Description { get; set; }
 
-    public int ProjectBucketId { get; set; }
+    public int ColumnId { get; set; }
 
-    public int ProjectId { get; set; }
+    public int BoardId { get; set; }
 
     public Column Column { get; set; } = null!;
 

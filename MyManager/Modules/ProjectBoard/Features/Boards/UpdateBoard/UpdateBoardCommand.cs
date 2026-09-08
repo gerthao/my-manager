@@ -3,5 +3,5 @@ using MyManager.Common;
 
 namespace MyManager.Modules.ProjectBoard.Features.Boards.UpdateBoard;
 
-[Isomorph]
+[GenerateApply]
 public sealed partial record UpdateBoardCommand(int Id, string Name, Option<string> Description);

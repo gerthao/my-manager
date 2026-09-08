@@ -23,14 +23,12 @@ public static class DeleteBoardEndpoint
         var result = await services.Handler.HandleCommand(command, ct);
 
         return result.Fold<DeleteBoardResult>(
-            errors =>
-                errors
-                    .Pipe(ErrorDetails.GlobalErrorOnly)
-                    .Pipe(TypedResults.BadRequest),
-            success =>
-                success
-                    .Tap(s => DeleteBoardLogs.LogDeleted(services.Logger, s.Id, s.Slug))
-                    .Pipe(_ => TypedResults.NoContent())
+            errors => errors
+                .Pipe(ErrorDetails.GlobalErrorOnly)
+                .Pipe(TypedResults.BadRequest),
+            success => success
+                .Tap(s => DeleteBoardLogs.LogDeleted(services.Logger, s.Id, s.Slug))
+                .Pipe(_ => TypedResults.NoContent())
         );
     }
 }

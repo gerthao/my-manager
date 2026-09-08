@@ -9,7 +9,7 @@ using GetColumnByIdResult = Results<NotFound<ErrorDetails>, Ok<GetColumnByIdResp
 
 public static class GetColumnByIdEndpoint
 {
-    [MapGet("/boards/{boardId:int}/columns/{columnId:int}")]
+    [MapGet("/project-board/boards/{boardId:int}/columns/{columnId:int}")]
     [WithName("GetColumnById")]
     [WithTags("Columns")]
     [WithSummary("Get a column by its ID")]

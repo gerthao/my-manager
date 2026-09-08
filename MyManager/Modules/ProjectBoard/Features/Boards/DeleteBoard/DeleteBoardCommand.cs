@@ -2,5 +2,5 @@
 
 namespace MyManager.Modules.ProjectBoard.Features.Boards.DeleteBoard;
 
-[Isomorph]
+[GenerateApply]
 public sealed partial record DeleteBoardCommand(int Id);

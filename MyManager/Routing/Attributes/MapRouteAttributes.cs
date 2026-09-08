@@ -18,7 +18,6 @@ public sealed class MapGetAttribute([StringSyntax("Route")] string pattern)
 public sealed class MapDeleteAttribute([StringSyntax("Route")] string pattern)
     : MapRouteAttribute("DELETE", pattern);
 
-
 [AttributeUsage(AttributeTargets.Method)]
 public sealed class MapPostAttribute([StringSyntax("Route")] string pattern)
     : MapRouteAttribute("POST", pattern);

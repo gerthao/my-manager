@@ -1,16 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MyManager.Attributes;
 using MyManager.Common;
+using MyManager.Http;
 
 namespace MyManager.Modules.ProjectBoard.Features.Columns.ListColumns;
 
-public interface IListColumnsHandler
-{
-    Task<Result<List<ListColumnsResponse>>> HandleQuery(ListColumnsQuery query, CancellationToken ct = default);
-}
 
-public sealed class ListColumnsHandler(ProjectBoardDbContext db)
+[RegisterScoped]
+public sealed class ListColumnsHandler(ProjectBoardDbContext db): IRequestHandler<ListColumnsQuery, Result<List<ListColumnsResponse>>>
 {
-    public async Task<Result<List<ListColumnsResponse>>> HandleQuery(ListColumnsQuery query,
+    public async Task<Result<List<ListColumnsResponse>>> Handle(ListColumnsQuery query,
         CancellationToken ct = default)
     {
         var columns = await db.Columns

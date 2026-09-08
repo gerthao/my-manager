@@ -12,21 +12,27 @@ public sealed class CreateBoardValidator : IValidator<CreateBoardRequest, Create
         ValidateDescription(request.Body.Description.ToOption())
     ).MapN(CreateBoardCommand.Apply);
 
-    private static Validated<ValidationError, Option<string>> ValidateDescription(Option<string> description) =>
-        Validated<ValidationError, Option<string>>.Condition(
-            description.IsEmpty || description.Exists(d => d.Trim().Length <= 255),
-            () => description.Map(d => d.Trim()).FilterNot(d => d == ""),
+    private static Validated<ValidationError, Option<string>> ValidateDescription(Option<string> description)
+    {
+        var desc = description.Map(d => d.Trim());
+
+        return Validated<ValidationError, Option<string>>.Condition(
+            desc is None || desc.Exists(d => d.Length <= 255),
+            () => description.FilterNot(d => d == ""),
             () => new ValidationError("description", "Board description cannot exceed 255 characters.")
         );
+    }
 
     private static Validated<ValidationError, string> ValidateName(string name)
     {
-        if (string.IsNullOrWhiteSpace(name))
+        var n = name?.Trim();
+
+        if (string.IsNullOrWhiteSpace(n))
             return new ValidationError("name", "Board name must be at least 1 character long.");
 
-        if (name.Length > 100)
+        if (n.Length > 100)
             return new ValidationError("name", "Board name cannot exceed 100 characters.");
 
-        return name.Trim();
+        return n;
     }
 }

@@ -22,8 +22,8 @@ public static class EitherLinqExtensions
         }
 
         public Either<TL, TR> Where(Func<TL> orElse, Func<TR, bool> predicate) => either.Fold<Either<TL, TR>>(
-            left => new Left<TL, TR>(left),
-            value => predicate(value) ? new Right<TL, TR>(value) : new Left<TL, TR>(orElse())
+            left => new Left<TL>(left),
+            value => predicate(value) ? new Right<TR>(value) : new Left<TL>(orElse())
         );
     }
 
@@ -61,8 +61,8 @@ public static class EitherLinqExtensions
 
         public Task<Either<TL, TR>> Where(Func<TL> orElse, Func<TR, bool> predicate) =>
             taskEither.FoldAsync<TL, TR, Either<TL, TR>>(
-                left => new Left<TL, TR>(left),
-                value => predicate(value) ? new Right<TL, TR>(value) : new Left<TL, TR>(orElse())
+                left => new Left<TL>(left),
+                value => predicate(value) ? new Right<TR>(value) : new Left<TL>(orElse())
             );
     }
 }

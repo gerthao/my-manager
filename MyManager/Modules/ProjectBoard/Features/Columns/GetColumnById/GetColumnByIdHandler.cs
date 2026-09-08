@@ -16,7 +16,7 @@ public sealed class GetColumnByIdHandler(ProjectBoardDbContext db)
         var column =
             await db.Columns.FirstOrDefaultAsync(c => c.Id == request.ColumnId && c.BoardId == request.BoardId, ct);
 
-        if (column is null) return ColumnErrors.NotFound();
+        if (column is null) return new ColumnErrors.NotFound();
 
         return new GetColumnByIdResponse(column.Id, column.BoardId, column.Name, column.Description, column.ModifiedAt);
     }
