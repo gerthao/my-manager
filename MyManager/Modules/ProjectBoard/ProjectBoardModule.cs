@@ -5,7 +5,7 @@ namespace MyManager.Modules.ProjectBoard;
 
 public sealed class ProjectBoardModule : IModule
 {
-    public const string Prefix = "/project-board";
+    public const string Prefix = "/api/project-board";
 
     public void MapEndpoints(IEndpointRouteBuilder app)
     {

@@ -5,7 +5,7 @@ namespace MyManager.Modules.ProjectBoard.Domain.Entities;
 
 public sealed class Card : ICreateTimestampedEntity, IModifyTimestampedEntity
 {
-    public int Id { get; init; }
+    public int CardId { get; init; }
 
     [MaxLength(100)]
     public required string Name { get; set; }

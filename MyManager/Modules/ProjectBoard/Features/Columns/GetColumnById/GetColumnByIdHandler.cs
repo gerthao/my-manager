@@ -8,16 +8,16 @@ namespace MyManager.Modules.ProjectBoard.Features.Columns.GetColumnById;
 
 [RegisterScoped]
 public sealed class GetColumnByIdHandler(ProjectBoardDbContext db)
-    : IRequestHandler<GetColumnByIdRequest, Result<GetColumnByIdResponse>>
+    : IRequestHandler<GetColumnByIdRequest, Either<ColumnNotFound, GetColumnByIdResponse>>
 {
-    public async Task<Result<GetColumnByIdResponse>> Handle(GetColumnByIdRequest request,
+    public async Task<Either<ColumnNotFound, GetColumnByIdResponse>> Handle(GetColumnByIdRequest request,
         CancellationToken ct = default)
     {
         var column =
-            await db.Columns.FirstOrDefaultAsync(c => c.Id == request.ColumnId && c.BoardId == request.BoardId, ct);
+            await db.Columns.FirstOrDefaultAsync(c => c.ColumnId == request.ColumnId && c.BoardId == request.BoardId, ct);
 
-        if (column is null) return new ColumnErrors.NotFound();
+        if (column is null) return new ColumnNotFound(request.ColumnId, request.BoardId, $"Unable to find column with id {request.ColumnId} for board id {request.BoardId}");
 
-        return new GetColumnByIdResponse(column.Id, column.BoardId, column.Name, column.Description, column.ModifiedAt);
+        return new GetColumnByIdResponse(column.ColumnId, column.BoardId, column.Name, column.ModifiedAt);
     }
 }

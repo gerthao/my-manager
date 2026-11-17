@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using MyManager.Attributes;
 using MyManager.Common;
 using MyManager.Http;
+using MyManager.Modules.ProjectBoard.Domain.Errors;
 using MyManager.Routing.Attributes;
 
 namespace MyManager.Modules.ProjectBoard.Features.Columns.DeleteColumn;
@@ -14,7 +15,7 @@ using DeleteColumnResult = Results<NotFound, Conflict, Ok<DeleteColumnResponse>>
 
 public static class DeleteColumnEndpoint
 {
-    [MapDelete("/project-board/boards/{boardId:int}/columns/{columnId:int}")]
+    [MapDelete("/api/project-board/boards/{boardId:int}/columns/{columnId:int}")]
     [WithTags("Columns")]
     [WithName("DeleteColumn")]
     [WithSummary("Delete a column from its board")]
@@ -24,8 +25,8 @@ public static class DeleteColumnEndpoint
         CancellationToken ct = default) =>
         await services.Handler.Handle(request, ct) switch
         {
-            Left<DeleteColumnError>(DeleteColumnNotFound err) => TypedResults.NotFound(),
-            Left<DeleteColumnError>(DeleteColumnContainsCards err) => TypedResults.Conflict(),
+            Left<DeleteColumnError>(ColumnNotFound err) => TypedResults.NotFound(),
+            Left<DeleteColumnError>(ColumnToDeleteHasCards err) => TypedResults.Conflict(),
             Right<DeleteColumnResponse>(var response) => TypedResults.Ok(response),
         };
 }
@@ -39,23 +40,16 @@ public sealed record DeleteColumnResponse(
     int BoardId,
     int ColumnId,
     string Name,
-    string? Description,
     DateTimeOffset ModifiedAt
 );
-
-public sealed record DeleteColumnNotFound;
-
-public sealed record DeleteColumnContainsCards;
 
 [Union]
 public readonly record struct DeleteColumnError : IUnion
 {
-    public DeleteColumnError(DeleteColumnNotFound value) => Value = value;
-    public DeleteColumnError(DeleteColumnContainsCards value) => Value = value;
-    public object Value { get; }
+    public DeleteColumnError(ColumnNotFound value) => Value = value;
+    public DeleteColumnError(ColumnToDeleteHasCards value) => Value = value;
 
-    public static implicit operator DeleteColumnError(DeleteColumnNotFound value) => new(value);
-    public static implicit operator DeleteColumnError(DeleteColumnContainsCards value) => new(value);
+    public object Value { get; }
 }
 
 public readonly record struct DeleteColumnServices(
@@ -72,20 +66,20 @@ public sealed class DeleteColumnHandler(ProjectBoardDbContext db)
     {
         var column =
             await db.Columns
-                .FirstOrDefaultAsync(c => c.BoardId == request.BoardId && c.Id == request.ColumnId, ct);
+                .FirstOrDefaultAsync(c => c.BoardId == request.BoardId && c.ColumnId == request.ColumnId, ct);
 
         if (column is null)
-            return new Left<DeleteColumnError>(new DeleteColumnNotFound());
+            return new DeleteColumnError(new ColumnNotFound());
 
         var cardsExist = await db.Cards.AnyAsync(c => c.ColumnId == request.ColumnId && c.BoardId == request.BoardId, ct);
 
-        if (cardsExist) return new Left<DeleteColumnError>(new DeleteColumnContainsCards());
+        if (cardsExist)
+            return new DeleteColumnError(new ColumnToDeleteHasCards());
 
         db.Columns.Remove(column);
 
         await db.SaveChangesAsync(ct);
 
-        return new DeleteColumnResponse(column.BoardId, column.Id, column.Name,
-            column.Description, column.ModifiedAt);
+        return new DeleteColumnResponse(column.BoardId, column.ColumnId, column.Name, column.ModifiedAt);
     }
 }

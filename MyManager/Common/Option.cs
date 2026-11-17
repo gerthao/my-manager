@@ -8,12 +8,12 @@ public sealed record Some<T>(T Value) where T : notnull;
 public sealed record None;
 
 [Union]
-public readonly struct Option<T>: IUnion, IEnumerable<T> where T : notnull
+public readonly struct Option<T> : IUnion where T : notnull
 {
-    public object? Value { get; }
+    public object Value { get; }
 
     public Option(Some<T> value) => Value = value;
-    public Option(None _) => Value = null;
+    public Option(None value) => Value = value;
 
     public static Option<T> Of(T? value) => value is null ? new(new None()) : new(new Some<T>(value));
     public static implicit operator Option<T>(T? value) => value is null ? new(new None()) : new(new Some<T>(value));
@@ -28,87 +28,87 @@ public readonly struct Option<T>: IUnion, IEnumerable<T> where T : notnull
     public bool Contains(T element) => this switch
     {
         Some<T>(var value) => value.Equals(element),
-        _                  => false,
+        _ => false,
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public bool Exists(Func<T, bool> predicate) => this is Some<T> some && predicate(some.Value);
+    public bool Exists(Func<T, bool> predicate) => this is Some<T>(var value) && predicate(value);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Option<T> Filter(Func<T, bool> predicate) => this switch
     {
         Some<T>(var value) when predicate(value) => this,
-        _                                        => new None(),
+        _ => new None(),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Option<T> FilterNot(Func<T, bool> predicate) => this switch
     {
         Some<T>(var value) when !predicate(value) => this,
-        _                                         => new None(),
+        _ => new None(),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Option<TA> FlatMap<TA>(Func<T, Option<TA>> binder) where TA : notnull => this switch
     {
         Some<T>(var value) => binder(value),
-        _                  => new None(),
+        _ => new None(),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Task<Option<TA>> FlatMapAsync<TA>(Func<T, Option<TA>> binder) where TA : notnull => this switch
     {
         Some<T>(var value) => Task.FromResult(binder(value)),
-        _                  => Task.FromResult(new Option<TA>(new None())),
+        _ => Task.FromResult(new Option<TA>(new None())),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Task<Option<TA>> FlatMapAsync<TA>(Func<T, Task<Option<TA>>> binder) where TA : notnull => this switch
     {
         Some<T>(var value) => binder(value),
-        _                  => Task.FromResult(new Option<TA>(new None())),
+        _ => Task.FromResult(new Option<TA>(new None())),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public TA Fold<TA>(TA ifEmpty, Func<T, TA> operation) where TA : notnull => this switch
     {
         Some<T>(var value) => operation(value),
-        _                  => ifEmpty,
+        _ => ifEmpty,
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public TA Fold<TA>(Func<TA> ifEmpty, Func<T, TA> operation) where TA : notnull => this switch
     {
         Some<T>(var value) => operation(value),
-        _                  => ifEmpty(),
+        _ => ifEmpty(),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Task<TA> FoldAsync<TA>(Func<TA> ifEmpty, Func<T, TA> operation) where TA : notnull => this switch
     {
         Some<T>(var value) => Task.FromResult(operation(value)),
-        _                  => Task.FromResult(ifEmpty()),
+        _ => Task.FromResult(ifEmpty()),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Task<TA> FoldAsync<TA>(Func<Task<TA>> ifEmpty, Func<T, TA> operation) where TA : notnull => this switch
     {
         Some<T>(var value) => Task.FromResult(operation(value)),
-        _                  => ifEmpty(),
+        _ => ifEmpty(),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Task<TA> FoldAsync<TA>(Func<TA> ifEmpty, Func<T, Task<TA>> operation) where TA : notnull => this switch
     {
         Some<T>(var value) => operation(value),
-        _                  => Task.FromResult(ifEmpty()),
+        _ => Task.FromResult(ifEmpty()),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Task<TA> FoldAsync<TA>(Func<Task<TA>> ifEmpty, Func<T, Task<TA>> operation) where TA : notnull => this switch
     {
         Some<T>(var value) => operation(value),
-        _                  => ifEmpty(),
+        _ => ifEmpty(),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -121,62 +121,62 @@ public readonly struct Option<T>: IUnion, IEnumerable<T> where T : notnull
     public T GetOrElse(T defaultValue) => this switch
     {
         Some<T>(var value) => value,
-        _                  => defaultValue,
+        _ => defaultValue,
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public TA GetOrElse<TA>(Func<TA> provider) where TA : T => this switch
     {
         Some<TA>(var value) => value,
-        _                   => provider(),
+        _ => provider(),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public async Task<T> GetOrElseAsync(Func<Task<T>> defaultValue) => this switch
     {
         Some<T>(var value) => value,
-        _                  => await defaultValue(),
+        _ => await defaultValue(),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Task<T> GetOrElseAsync(Func<T> defaultValue) => this switch
     {
         Some<T>(var value) => Task.FromResult(value),
-        _                  => Task.FromResult(defaultValue()),
+        _ => Task.FromResult(defaultValue()),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Option<TA> Map<TA>(Func<T, TA> mapper) where TA : notnull => this switch
     {
         Some<T>(var value) => new Some<TA>(mapper(value)),
-        _                  => new None(),
+        _ => new None(),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Task<Option<TA>> MapAsync<TA>(Func<T, TA> mapper) where TA : notnull => this switch
     {
         Some<T>(var value) => Task.FromResult<Option<TA>>(new Some<TA>(mapper(value))),
-        _                  => Task.FromResult<Option<TA>>(new None()),
+        _ => Task.FromResult<Option<TA>>(new None()),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public async Task<Option<TA>> MapAsync<TA>(Func<T, Task<TA>> mapper) where TA : notnull => this switch
     {
         Some<T>(var value) => await mapper(value),
-        _                  => new None(),
+        _ => new None(),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Option<T> OrElse(Func<Option<T>> provider) => this switch
     {
         Some<T> => this,
-        _       => provider(),
+        _ => provider(),
     };
 
     public Option<T> OrElse(Option<T> or) => this switch
     {
         Some<T> => this,
-        _       => or,
+        _ => or,
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -221,15 +221,13 @@ public readonly struct Option<T>: IUnion, IEnumerable<T> where T : notnull
     public override string ToString() => this switch
     {
         Some<T>(var value) => $"Some({value})",
-        _                  => "None",
+        _ => "None",
     };
-
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     public Option<(T, T1)> Zip<T1>(Option<T1> that) where T1 : notnull => (this, that) switch
     {
         (Some<T> (var t0), Some<T1>(var t1)) => (t0, t1),
-        _                                    => new None(),
+        _ => new None(),
     };
 
     public Option<(T, T1, T2)> Zip<T1, T2>(Option<T1> that1, Option<T2> that2)
@@ -237,7 +235,7 @@ public readonly struct Option<T>: IUnion, IEnumerable<T> where T : notnull
         where T2 : notnull => (this, that1, that2) switch
     {
         (Some<T> (var t0), Some<T1>(var t1), Some<T2>(var t2)) => (t0, t1, t2),
-        _                                                      => new None(),
+        _ => new None(),
     };
 
     public Option<(T, T1, T2, T3)> Zip<T1, T2, T3>(Option<T1> that1, Option<T2> that2, Option<T3> that3)
@@ -246,11 +244,11 @@ public readonly struct Option<T>: IUnion, IEnumerable<T> where T : notnull
         where T3 : notnull => (this, that1, that2, that3) switch
     {
         (Some<T> (var t0), Some<T1>(var t1), Some<T2>(var t2), Some<T3>(var t3)) => (t0, t1, t2, t3),
-        _                                                                        => new None(),
+        _ => new None(),
     };
 
     public Option<(T, T1, T2, T3, T4)> Zip<T1, T2, T3, T4>(Option<T1> that1, Option<T2> that2, Option<T3> that3,
-                                                           Option<T4> that4)
+        Option<T4> that4)
         where T1 : notnull
         where T2 : notnull
         where T3 : notnull
@@ -262,7 +260,7 @@ public readonly struct Option<T>: IUnion, IEnumerable<T> where T : notnull
     };
 
     public Option<(T, T1, T2, T3, T4, T5)> Zip<T1, T2, T3, T4, T5>(Option<T1> that1, Option<T2> that2, Option<T3> that3,
-                                                                   Option<T4> that4, Option<T5> that5)
+        Option<T4> that4, Option<T5> that5)
         where T1 : notnull
         where T2 : notnull
         where T3 : notnull

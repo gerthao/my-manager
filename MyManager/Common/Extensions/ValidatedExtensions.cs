@@ -16,7 +16,7 @@ public static class ValidatedExtensions
             Dictionary<string, object?>? extensions = null
         )
         {
-            var ext = extensions ?? new Dictionary<string, object?>();
+            var ext = extensions ?? [];
 
             return new ValidationProblemDetails
             {
@@ -39,8 +39,7 @@ public static class ValidatedExtensions
             Dictionary<string, object?>? extensions = null
         )
         {
-            var ext = extensions ?? new Dictionary<string, object?>();
-            ext["errors"] = errors.AsDictionary();
+            var ext = extensions ?? [];
 
             return new ProblemDetails
             {
@@ -389,6 +388,254 @@ public static class ValidatedExtensions
             if (@this.Item6 is Invalid<TE> i6) errors.AddRange(i6.Errors);
             if (@this.Item7 is Invalid<TE> i7) errors.AddRange(i7.Errors);
             if (@this.Item8 is Invalid<TE> i8) errors.AddRange(i8.Errors);
+
+            return NonEmptyList<TE>.Of(errors[0], [.. errors.Skip(1)]);
+        }
+    }
+
+    extension<TE, T1, T2, T3, T4, T5, T6, T7, T8, T9>((
+        Validated<TE, T1>,
+        Validated<TE, T2>,
+        Validated<TE, T3>,
+        Validated<TE, T4>,
+        Validated<TE, T5>,
+        Validated<TE, T6>,
+        Validated<TE, T7>,
+        Validated<TE, T8>,
+        Validated<TE, T9>
+        ) @this)
+        where TE : notnull
+        where T1 : notnull
+        where T2 : notnull
+        where T3 : notnull
+        where T4 : notnull
+        where T5 : notnull
+        where T6 : notnull
+        where T7 : notnull
+        where T8 : notnull
+        where T9 : notnull
+    {
+        public Validated<TE, TB> MapN<TB>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, TB> map) where TB : notnull
+        {
+            if (@this is
+                {
+                    Item1: Valid<T1> v1,
+                    Item2: Valid<T2> v2,
+                    Item3: Valid<T3> v3,
+                    Item4: Valid<T4> v4,
+                    Item5: Valid<T5> v5,
+                    Item6: Valid<T6> v6,
+                    Item7: Valid<T7> v7,
+                    Item8: Valid<T8> v8,
+                    Item9: Valid<T9> v9
+                })
+                return map(v1.Value, v2.Value, v3.Value, v4.Value, v5.Value, v6.Value, v7.Value, v8.Value, v9.Value);
+
+
+            List<TE> errors = [];
+
+            if (@this.Item1 is Invalid<TE> i1) errors.AddRange(i1.Errors);
+            if (@this.Item2 is Invalid<TE> i2) errors.AddRange(i2.Errors);
+            if (@this.Item3 is Invalid<TE> i3) errors.AddRange(i3.Errors);
+            if (@this.Item4 is Invalid<TE> i4) errors.AddRange(i4.Errors);
+            if (@this.Item5 is Invalid<TE> i5) errors.AddRange(i5.Errors);
+            if (@this.Item6 is Invalid<TE> i6) errors.AddRange(i6.Errors);
+            if (@this.Item7 is Invalid<TE> i7) errors.AddRange(i7.Errors);
+            if (@this.Item8 is Invalid<TE> i8) errors.AddRange(i8.Errors);
+            if (@this.Item9 is Invalid<TE> i9) errors.AddRange(i9.Errors);
+
+            return NonEmptyList<TE>.Of(errors[0], [.. errors.Skip(1)]);
+        }
+    }
+
+    extension<TE, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>((
+        Validated<TE, T1>,
+        Validated<TE, T2>,
+        Validated<TE, T3>,
+        Validated<TE, T4>,
+        Validated<TE, T5>,
+        Validated<TE, T6>,
+        Validated<TE, T7>,
+        Validated<TE, T8>,
+        Validated<TE, T9>,
+        Validated<TE, T10>
+        ) @this)
+        where TE : notnull
+        where T1 : notnull
+        where T2 : notnull
+        where T3 : notnull
+        where T4 : notnull
+        where T5 : notnull
+        where T6 : notnull
+        where T7 : notnull
+        where T8 : notnull
+        where T9 : notnull
+        where T10 : notnull
+    {
+        public Validated<TE, TB> MapN<TB>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TB> map) where TB : notnull
+        {
+            if (@this is
+                {
+                    Item1: Valid<T1> v1,
+                    Item2: Valid<T2> v2,
+                    Item3: Valid<T3> v3,
+                    Item4: Valid<T4> v4,
+                    Item5: Valid<T5> v5,
+                    Item6: Valid<T6> v6,
+                    Item7: Valid<T7> v7,
+                    Item8: Valid<T8> v8,
+                    Item9: Valid<T9> v9,
+                    Item10: Valid<T10> v10
+                })
+                return map(v1.Value, v2.Value, v3.Value, v4.Value, v5.Value, v6.Value, v7.Value, v8.Value, v9.Value,
+                    v10.Value);
+
+
+            List<TE> errors = [];
+
+            if (@this.Item1 is Invalid<TE> i1) errors.AddRange(i1.Errors);
+            if (@this.Item2 is Invalid<TE> i2) errors.AddRange(i2.Errors);
+            if (@this.Item3 is Invalid<TE> i3) errors.AddRange(i3.Errors);
+            if (@this.Item4 is Invalid<TE> i4) errors.AddRange(i4.Errors);
+            if (@this.Item5 is Invalid<TE> i5) errors.AddRange(i5.Errors);
+            if (@this.Item6 is Invalid<TE> i6) errors.AddRange(i6.Errors);
+            if (@this.Item7 is Invalid<TE> i7) errors.AddRange(i7.Errors);
+            if (@this.Item8 is Invalid<TE> i8) errors.AddRange(i8.Errors);
+            if (@this.Item9 is Invalid<TE> i9) errors.AddRange(i9.Errors);
+            if (@this.Item10 is Invalid<TE> i10) errors.AddRange(i10.Errors);
+
+            return NonEmptyList<TE>.Of(errors[0], [.. errors.Skip(1)]);
+        }
+    }
+
+    extension<TE, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>((
+        Validated<TE, T1>,
+        Validated<TE, T2>,
+        Validated<TE, T3>,
+        Validated<TE, T4>,
+        Validated<TE, T5>,
+        Validated<TE, T6>,
+        Validated<TE, T7>,
+        Validated<TE, T8>,
+        Validated<TE, T9>,
+        Validated<TE, T10>,
+        Validated<TE, T11>
+        ) @this)
+        where TE : notnull
+        where T1 : notnull
+        where T2 : notnull
+        where T3 : notnull
+        where T4 : notnull
+        where T5 : notnull
+        where T6 : notnull
+        where T7 : notnull
+        where T8 : notnull
+        where T9 : notnull
+        where T10 : notnull
+        where T11 : notnull
+    {
+        public Validated<TE, TB> MapN<TB>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TB> map) where TB : notnull
+        {
+            if (@this is
+                {
+                    Item1: Valid<T1> v1,
+                    Item2: Valid<T2> v2,
+                    Item3: Valid<T3> v3,
+                    Item4: Valid<T4> v4,
+                    Item5: Valid<T5> v5,
+                    Item6: Valid<T6> v6,
+                    Item7: Valid<T7> v7,
+                    Item8: Valid<T8> v8,
+                    Item9: Valid<T9> v9,
+                    Item10: Valid<T10> v10,
+                    Item11: Valid<T11> v11,
+                })
+                return map(v1.Value, v2.Value, v3.Value, v4.Value, v5.Value, v6.Value, v7.Value, v8.Value, v9.Value,
+                    v10.Value, v11.Value);
+
+
+            List<TE> errors = [];
+
+            if (@this.Item1 is Invalid<TE> i1) errors.AddRange(i1.Errors);
+            if (@this.Item2 is Invalid<TE> i2) errors.AddRange(i2.Errors);
+            if (@this.Item3 is Invalid<TE> i3) errors.AddRange(i3.Errors);
+            if (@this.Item4 is Invalid<TE> i4) errors.AddRange(i4.Errors);
+            if (@this.Item5 is Invalid<TE> i5) errors.AddRange(i5.Errors);
+            if (@this.Item6 is Invalid<TE> i6) errors.AddRange(i6.Errors);
+            if (@this.Item7 is Invalid<TE> i7) errors.AddRange(i7.Errors);
+            if (@this.Item8 is Invalid<TE> i8) errors.AddRange(i8.Errors);
+            if (@this.Item9 is Invalid<TE> i9) errors.AddRange(i9.Errors);
+            if (@this.Item10 is Invalid<TE> i10) errors.AddRange(i10.Errors);
+            if (@this.Item11 is Invalid<TE> i11) errors.AddRange(i11.Errors);
+
+            return NonEmptyList<TE>.Of(errors[0], [.. errors.Skip(1)]);
+        }
+    }
+
+    extension<TE, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>((
+        Validated<TE, T1>,
+        Validated<TE, T2>,
+        Validated<TE, T3>,
+        Validated<TE, T4>,
+        Validated<TE, T5>,
+        Validated<TE, T6>,
+        Validated<TE, T7>,
+        Validated<TE, T8>,
+        Validated<TE, T9>,
+        Validated<TE, T10>,
+        Validated<TE, T11>,
+        Validated<TE, T12>
+        ) @this)
+        where TE : notnull
+        where T1 : notnull
+        where T2 : notnull
+        where T3 : notnull
+        where T4 : notnull
+        where T5 : notnull
+        where T6 : notnull
+        where T7 : notnull
+        where T8 : notnull
+        where T9 : notnull
+        where T10 : notnull
+        where T11 : notnull
+        where T12 : notnull
+    {
+        public Validated<TE, TB> MapN<TB>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TB> map)
+            where TB : notnull
+        {
+            if (@this is
+                {
+                    Item1: Valid<T1> v1,
+                    Item2: Valid<T2> v2,
+                    Item3: Valid<T3> v3,
+                    Item4: Valid<T4> v4,
+                    Item5: Valid<T5> v5,
+                    Item6: Valid<T6> v6,
+                    Item7: Valid<T7> v7,
+                    Item8: Valid<T8> v8,
+                    Item9: Valid<T9> v9,
+                    Item10: Valid<T10> v10,
+                    Item11: Valid<T11> v11,
+                    Item12: Valid<T12> v12,
+                })
+                return map(v1.Value, v2.Value, v3.Value, v4.Value, v5.Value, v6.Value, v7.Value, v8.Value, v9.Value,
+                    v10.Value, v11.Value, v12.Value);
+
+
+            List<TE> errors = [];
+
+            if (@this.Item1 is Invalid<TE> i1) errors.AddRange(i1.Errors);
+            if (@this.Item2 is Invalid<TE> i2) errors.AddRange(i2.Errors);
+            if (@this.Item3 is Invalid<TE> i3) errors.AddRange(i3.Errors);
+            if (@this.Item4 is Invalid<TE> i4) errors.AddRange(i4.Errors);
+            if (@this.Item5 is Invalid<TE> i5) errors.AddRange(i5.Errors);
+            if (@this.Item6 is Invalid<TE> i6) errors.AddRange(i6.Errors);
+            if (@this.Item7 is Invalid<TE> i7) errors.AddRange(i7.Errors);
+            if (@this.Item8 is Invalid<TE> i8) errors.AddRange(i8.Errors);
+            if (@this.Item9 is Invalid<TE> i9) errors.AddRange(i9.Errors);
+            if (@this.Item10 is Invalid<TE> i10) errors.AddRange(i10.Errors);
+            if (@this.Item11 is Invalid<TE> i11) errors.AddRange(i11.Errors);
+            if (@this.Item12 is Invalid<TE> i12) errors.AddRange(i12.Errors);
 
             return NonEmptyList<TE>.Of(errors[0], [.. errors.Skip(1)]);
         }

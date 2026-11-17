@@ -4,6 +4,7 @@ using MyManager.Common;
 using MyManager.Common.Extensions;
 using MyManager.Http;
 using MyManager.Modules.ProjectBoard.Domain.Entities;
+using MyManager.Modules.ProjectBoard.Domain.Errors;
 
 namespace MyManager.Modules.ProjectBoard.Features.Boards.CreateBoard;
 
@@ -15,6 +16,7 @@ public sealed class CreateBoardHandler(ProjectBoardDbContext db)
         CancellationToken ct = default)
     {
         var boardExists = await db.Boards.Where(b => b.Name == command.Name).AnyAsync(ct);
+
         if (boardExists)
             return new BoardAlreadyExists($"Board {command.Name} already exists!");
 
@@ -28,6 +30,6 @@ public sealed class CreateBoardHandler(ProjectBoardDbContext db)
         await db.Boards.AddAsync(board, ct);
         await db.SaveChangesAsync(ct);
 
-        return new CreateBoardResponse(board.Id, board.Name, board.Slug, board.Description, board.CreatedAt);
+        return new CreateBoardResponse(board.BoardId, board.Name, board.Slug, board.Description, board.CreatedAt);
     }
 }

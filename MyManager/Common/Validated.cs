@@ -8,10 +8,10 @@ public sealed record Valid<TA>(TA Value)
     where TA : notnull;
 
 public sealed record Invalid<TE>(NonEmptyList<TE> Errors)
-    where TE : notnull ;
+    where TE : notnull;
 
 [Union]
-public readonly struct Validated<TE, TA>: IUnion, IEnumerable<TA>
+public readonly struct Validated<TE, TA> : IUnion
     where TE : notnull
     where TA : notnull
 {
@@ -28,7 +28,6 @@ public readonly struct Validated<TE, TA>: IUnion, IEnumerable<TA>
         (Invalid<TE>(var e1), Invalid<TE>(var e2)) => e1.Concat(e2),
         (Invalid<TE>(var e1), _) => e1,
         (_, Invalid<TE>(var e2)) => e2,
-        _ => throw new UnreachableException(),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -40,7 +39,6 @@ public readonly struct Validated<TE, TA>: IUnion, IEnumerable<TA>
         (Invalid<TE>(var e1), Invalid<TE>(var e2)) => e1.Concat(e2),
         (Invalid<TE>(var e1), _) => e1,
         (_, Invalid<TE>(var e2)) => e2,
-        _ => throw new UnreachableException(),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -53,7 +51,6 @@ public readonly struct Validated<TE, TA>: IUnion, IEnumerable<TA>
         (Invalid<TE>(var e1), Invalid<TE>(var e2)) => combineErrors(e1, e2),
         (Invalid<TE>(var e1), _) => e1,
         (_, Invalid<TE>(var e2)) => e2,
-        _ => throw new UnreachableException(),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -65,47 +62,34 @@ public readonly struct Validated<TE, TA>: IUnion, IEnumerable<TA>
         predicate(value) ? value : NonEmptyList<TE>.One(invalid());
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Validated<TE, TB> FlatMap<TB>(Func<TA, Validated<TE, TB>> flatMap) where TB : notnull => this switch
-    {
-        Valid<TA>(var validValue) => flatMap(validValue),
-        Invalid<TE>(var invalidValue) => invalidValue,
-        _ => throw new UnreachableException(),
-    };
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public T Fold<T>(Func<NonEmptyList<TE>, T> ifInvalid, Func<TA, T> ifValid) => this switch
     {
         Valid<TA>(var validValue) => ifValid(validValue),
         Invalid<TE>(var invalidValue) => ifInvalid(invalidValue),
-        _ => throw new UnreachableException(),
     };
 
     public Task<T> FoldAsync<T>(Func<NonEmptyList<TE>, Task<T>> ifInvalid, Func<TA, Task<T>> ifValid) => this switch
     {
         Valid<TA>(var validValue) => ifValid(validValue),
         Invalid<TE>(var invalidValue) => ifInvalid(invalidValue),
-        _ => throw new UnreachableException(),
     };
 
     public Task<T> FoldAsync<T>(Func<NonEmptyList<TE>, T> ifInvalid, Func<TA, Task<T>> ifValid) => this switch
     {
         Valid<TA>(var validValue) => ifValid(validValue),
         Invalid<TE>(var invalidValue) => Task.FromResult(ifInvalid(invalidValue)),
-        _ => throw new UnreachableException(),
     };
 
     public Task<T> FoldAsync<T>(Func<NonEmptyList<TE>, Task<T>> ifInvalid, Func<TA, T> ifValid) => this switch
     {
         Valid<TA>(var validValue) => Task.FromResult(ifValid(validValue)),
         Invalid<TE>(var invalidValue) => ifInvalid(invalidValue),
-        _ => throw new UnreachableException(),
     };
 
     public Task<T> FoldAsync<T>(Func<NonEmptyList<TE>, T> ifInvalid, Func<TA, T> ifValid) => this switch
     {
         Valid<TA>(var validValue) => Task.FromResult(ifValid(validValue)),
         Invalid<TE>(var invalidValue) => Task.FromResult(ifInvalid(invalidValue)),
-        _ => throw new UnreachableException(),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -119,7 +103,6 @@ public readonly struct Validated<TE, TA>: IUnion, IEnumerable<TA>
     {
         Valid<TA>(var validValue) => map(validValue),
         Invalid<TE>(var invalidValue) => invalidValue,
-        _ => throw new UnreachableException(),
     };
 
     public static implicit operator Validated<TE, TA>(TA value) => new(new Valid<TA>(value));
@@ -160,6 +143,12 @@ public readonly struct Validated<TE, TA>: IUnion, IEnumerable<TA>
         return this;
     }
 
+    public override String ToString() => this switch
+    {
+        Valid<TA>(var value) => $"Valid({value})",
+        Invalid<TE>(var errors) => $"Invalid([{string.Join(", ", errors)}]"
+    };
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Validated<TE, (TA, TB)> Zip<TB>(Validated<TE, TB> that) where TB : notnull => (this, that) switch
     {
@@ -167,7 +156,6 @@ public readonly struct Validated<TE, TA>: IUnion, IEnumerable<TA>
         (Invalid<TE>(var e1), Invalid<TE>(var e2)) => e1.Concat(e2),
         (Invalid<TE>(var e1), _) => e1,
         (_, Invalid<TE>(var e2)) => e2,
-        _ => throw new UnreachableException(),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -180,6 +168,4 @@ public readonly struct Validated<TE, TA>: IUnion, IEnumerable<TA>
     {
         if (this is Valid<TA>(var value)) yield return value;
     }
-
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

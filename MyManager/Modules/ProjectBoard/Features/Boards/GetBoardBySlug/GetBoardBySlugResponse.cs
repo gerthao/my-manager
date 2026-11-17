@@ -1,7 +1,7 @@
 namespace MyManager.Modules.ProjectBoard.Features.Boards.GetBoardBySlug;
 
 public sealed record GetBoardBySlugResponse(
-    int Id,
+    int BoardId,
     string Name,
     string Slug,
     string? Description,

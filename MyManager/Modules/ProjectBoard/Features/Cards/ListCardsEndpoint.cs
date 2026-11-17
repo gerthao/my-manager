@@ -13,10 +13,11 @@ using ListCardsResult = Ok<List<ListCardsResponse>>;
 
 public static class ListCardsEndpoint
 {
-    [MapGet("/project-board/{boardId:int}/cards")]
+    [MapGet("/api/project-board/{boardId:int}/cards")]
+    [WithTags("Cards")]
     [WithName("ListCards")]
     [WithSummary("List cards of a board")]
-    public async static Task<ListCardsResult> HandleEndpoint(
+    public static async Task<ListCardsResult> HandleEndpoint(
         [AsParameters] ListCardsRequest request,
         [AsParameters] ListCardsServices services,
         CancellationToken ct = default
@@ -38,7 +39,7 @@ public sealed record ListCardsQuery(
 );
 
 public sealed record ListCardsResponse(
-    int Id,
+    int CardId,
     int BoardId,
     string Name,
     string? Description,
@@ -59,7 +60,7 @@ public sealed class ListCardsHandler(ProjectBoardDbContext db) : IRequestHandler
         var cards = await db.Cards
             .Where(c => c.BoardId == query.BoardId)
             .Select(c => new ListCardsResponse(
-                Id: c.Id,
+                CardId: c.CardId,
                 BoardId: c.BoardId,
                 Name: c.Name,
                 Description: c.Description,

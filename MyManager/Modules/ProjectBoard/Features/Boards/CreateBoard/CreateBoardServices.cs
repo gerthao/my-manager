@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyManager.Common;
 using MyManager.Http;
+using MyManager.Modules.ProjectBoard.Domain.Errors;
 
 namespace MyManager.Modules.ProjectBoard.Features.Boards.CreateBoard;
 

@@ -12,12 +12,12 @@ public interface IListBoardsHandler
 
 [RegisterScoped]
 public sealed class ListBoardsHandler(ProjectBoardDbContext db)
-    : IRequestHandler<ListBoardsQuery, Result<List<ListBoardsResponse>>>
+    : IRequestHandler<ListBoardsQuery, List<ListBoardsResponse>>
 {
-    public async Task<Result<List<ListBoardsResponse>>> Handle(ListBoardsQuery query, CancellationToken ct = default)
+    public async Task<List<ListBoardsResponse>> Handle(ListBoardsQuery query, CancellationToken ct = default)
     {
         var boards = db.Boards
-            .Select(b => new ListBoardsResponse(b.Id, b.Name, b.Slug, b.CreatedAt, b.ModifiedAt));
+            .Select(b => new ListBoardsResponse(b.BoardId, b.Name, b.Slug, b.CreatedAt, b.ModifiedAt));
 
         if (query.Name is not null)
             boards = boards.Where(b => b.Name.Contains(query.Name, StringComparison.InvariantCultureIgnoreCase));

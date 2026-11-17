@@ -7,7 +7,7 @@ namespace MyManager.Modules.ProjectBoard.Domain.Entities;
 [Index(nameof(Name), nameof(Slug), IsUnique = true)]
 public sealed class Board : ICreateTimestampedEntity, IModifyTimestampedEntity
 {
-    public int Id { get; init; }
+    public int BoardId { get; init; }
 
     [MinLength(1)]
     [MaxLength(100)]

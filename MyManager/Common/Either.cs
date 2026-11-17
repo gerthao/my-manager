@@ -5,14 +5,12 @@ using System.Runtime.CompilerServices;
 namespace MyManager.Common;
 
 public sealed record Left<TL>(TL Value)
-    where TL : notnull ;
+    where TL : notnull;
 
 public sealed record Right<TR>(TR Value) where TR : notnull;
 
-// Source gen doesn't seem to work as expected with closed modifier or union modifier
-// Do union attribute + interface until then
 [Union]
-public readonly struct Either<TL, TR>: IUnion, IEnumerable<TR>
+public readonly struct Either<TL, TR> : IUnion
     where TL : notnull
     where TR : notnull
 {
@@ -21,11 +19,13 @@ public readonly struct Either<TL, TR>: IUnion, IEnumerable<TR>
     public Either(Left<TL> value) => Value = value;
     public Either(Right<TR> value) => Value = value;
 
+    public static Either<TL, TR> Left(TL value) => new(new Left<TL>(value));
+    public static Either<TL, TR> Right(TR value) => new(new Right<TR>(value));
+
     public Either<TR, TL> Swap => this switch
     {
-        Left<TL>(var leftValue)   => new Right<TL>(leftValue),
+        Left<TL>(var leftValue) => new Right<TL>(leftValue),
         Right<TR>(var rightValue) => new Left<TR>(rightValue),
-        _ => throw new UnreachableException(),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -33,9 +33,8 @@ public readonly struct Either<TL, TR>: IUnion, IEnumerable<TR>
         where TL1 : notnull
         where TR1 : notnull => this switch
     {
-        Left<TL>(var leftValue)   => new Left<TL1>(mapLeft(leftValue)),
+        Left<TL>(var leftValue) => new Left<TL1>(mapLeft(leftValue)),
         Right<TR>(var rightValue) => new Right<TR1>(mapRight(rightValue)),
-        _ => throw new UnreachableException(),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -50,14 +49,14 @@ public readonly struct Either<TL, TR>: IUnion, IEnumerable<TR>
     public bool ContainsLeft(TL element) => this switch
     {
         Left<TL>(var value) => value.Equals(element),
-        _                        => false,
+        _ => false,
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool Contains(TR element) => this switch
     {
         Right<TR>(var value) => value.Equals(element),
-        _                        => false,
+        _ => false,
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -77,27 +76,24 @@ public readonly struct Either<TL, TR>: IUnion, IEnumerable<TR>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Either<TL, TR> FilterOrElse(Func<TR, bool> predicate, Func<TL> zero) => this switch
     {
-        Left<TL>(var leftValue)                              => new Left<TL>(leftValue),
+        Left<TL>(var leftValue) => new Left<TL>(leftValue),
         Right<TR>(var rightValue) when predicate(rightValue) => new Right<TR>(rightValue),
-        Right<TR>                                            => new Left<TL>(zero()),
-        _ => throw new UnreachableException(),
+        Right<TR> => new Left<TL>(zero()),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Either<TL, TR> FilterOrElse(Func<TR, bool> predicate, TL zero) => this switch
     {
-        Left<TL>(var leftValue)                              => new Left<TL>(leftValue),
+        Left<TL>(var leftValue) => new Left<TL>(leftValue),
         Right<TR>(var rightValue) when predicate(rightValue) => new Right<TR>(rightValue),
-        Right<TR>                                            => new Left<TL>(zero),
-        _ => throw new UnreachableException(),
+        Right<TR> => new Left<TL>(zero),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Either<TL, TR1> FlatMap<TR1>(Func<TR, Either<TL, TR1>> binder) where TR1 : notnull => this switch
     {
-        Left<TL>(var error)  => new Left<TL>(error),
+        Left<TL>(var error) => new Left<TL>(error),
         Right<TR>(var value) => binder(value),
-        _ => throw new UnreachableException(),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -106,9 +102,8 @@ public readonly struct Either<TL, TR>: IUnion, IEnumerable<TR>
         Func<TR, TA> ifRight
     ) => this switch
     {
-        Left<TL>(var leftValue)   => ifLeft(leftValue),
+        Left<TL>(var leftValue) => ifLeft(leftValue),
         Right<TR>(var rightValue) => ifRight(rightValue),
-        _ => throw new UnreachableException(),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -126,24 +121,21 @@ public readonly struct Either<TL, TR>: IUnion, IEnumerable<TR>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public TR GetOrElse(Func<TR> or) => this switch
     {
-        Left<TL>             => or(),
+        Left<TL> => or(),
         Right<TR>(var value) => value,
-        _ => throw new UnreachableException(),
     };
 
     public TR GetOrElse(TR or) => this switch
     {
-        Left<TL>             => or,
+        Left<TL> => or,
         Right<TR>(var value) => value,
-        _ => throw new UnreachableException(),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Either<TL, TR1> Map<TR1>(Func<TR, TR1> mapper) where TR1 : notnull => this switch
     {
-        Left<TL>(var leftValue)   => new Left<TL>(leftValue),
+        Left<TL>(var leftValue) => new Left<TL>(leftValue),
         Right<TR>(var rightValue) => new Right<TR1>(mapper(rightValue)),
-        _ => throw new UnreachableException(),
     };
 
     public static implicit operator Either<TL, TR>(TL left) => new Left<TL>(left);
@@ -152,17 +144,15 @@ public readonly struct Either<TL, TR>: IUnion, IEnumerable<TR>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Either<TL, TR> OrElse(Func<Either<TL, TR>> or) => this switch
     {
-        Left<TL>  => or(),
+        Left<TL> => or(),
         Right<TR> => this,
-        _ => throw new UnreachableException(),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Either<TL, TR> OrElse(Either<TL, TR> or) => this switch
     {
-        Left<TL>  => or,
+        Left<TL> => or,
         Right<TR> => this,
-        _ => throw new UnreachableException(),
     };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -206,6 +196,4 @@ public readonly struct Either<TL, TR>: IUnion, IEnumerable<TR>
         left => $"Left({left})",
         right => $"Right({right})"
     );
-
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

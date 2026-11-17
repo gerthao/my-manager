@@ -6,3 +6,6 @@ MyManager.SourceGenerators/MyManager.SourceGenerators.Tests/bin
 MyManager.SourceGenerators/MyManager.SourceGenerators.Tests/obj
 MyManager.SourceGenerators/MyManager.SourceGenerators/bin
 MyManager.SourceGenerators/MyManager.SourceGenerators/obj
+MyManager/client/node_modules
+MyManager/client/.tanstack
+MyManager/client/.idea

@@ -1,0 +1,95 @@
+﻿.form {
+    --form-gap: 1.5rem;
+    --form-grid-template-columns: 1fr;
+
+    display: grid;
+    gap: var(--form-gap);
+
+    @media (width > 720px) {
+        grid-template-columns: var(--form-grid-template-columns);
+    }
+}
+
+.form button {
+    justify-self: start;
+}
+
+.form-group {
+    display: grid;
+    gap: 0.5rem;
+
+    transition: all 0.2s ease;
+
+    :has(.full-width) {
+        grid-column: 1 / -1;
+    }
+
+    &:has(input:focus-visible), &:has(textarea:focus-visible), &:has(select:focus-visible) {
+        label {
+            transform: translateY(-4px);
+        }
+    }
+}
+
+label {
+    text-transform: capitalize;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: transform 0.2s ease;
+}
+
+input {
+    font: inherit;
+    border: none;
+    border-radius: 2px;
+    padding: 0.5rem;
+    box-shadow: 0 0 0 2px var(--color-neutral-100);
+    background-color: var(--color-neutral-0);
+    outline: 2px solid transparent;
+    transition: outline-color 0.2s ease, outline-offset 0.2s ease;
+
+    &:focus-visible {
+        outline: 2px solid var(--color-neutral-100);
+        outline-offset: 4px;
+    }
+
+    &:user-valid {
+        box-shadow: 0 0 0 2px var(--color-success-50);
+    }
+
+    &:user-invalid {
+        box-shadow: 0 0 0 2px var(--color-danger-50);
+    }
+}
+
+
+textarea {
+    font: inherit;
+    border: none;
+    border-radius: 2px;
+    padding: 0.5rem;
+    box-shadow: 0 0 0 2px var(--color-neutral-100);
+    background-color: var(--color-neutral-0);
+    outline: 2px solid transparent;
+    transition: outline-color 0.2s ease, outline-offset 0.2s ease;
+    min-block-size: 3lh;
+    field-sizing: content;
+    resize: none;
+
+    &:focus-visible {
+        outline: 2px solid var(--color-neutral-100);
+        outline-offset: 4px;
+    }
+
+    &:user-valid {
+        box-shadow: 0 0 0 2px var(--color-success-50);
+    }
+
+    &:user-invalid {
+        box-shadow: 0 0 0 2px var(--color-danger-50);
+    }
+}
+
+select {
+    font: inherit;
+}

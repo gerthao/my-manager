@@ -1,31 +1,25 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyManager.Attributes;
 using MyManager.Common;
-using MyManager.Modules.ProjectBoard.Domain.Errors;
+using MyManager.Http;
 
 namespace MyManager.Modules.ProjectBoard.Features.Boards.DeleteBoard;
 
-public interface IDeleteBoardHandler
-{
-    Task<Result<DeleteBoardResponse>> HandleCommand(DeleteBoardCommand command,
-        CancellationToken ct = default);
-}
-
 [RegisterScoped]
-public sealed class DeleteBoardHandler(ProjectBoardDbContext db) : IDeleteBoardHandler
+public sealed class DeleteBoardHandler(ProjectBoardDbContext db) : IRequestHandler<DeleteBoardCommand, Option<DeleteBoardResponse>>
 {
-    public async Task<Result<DeleteBoardResponse>> HandleCommand(DeleteBoardCommand command,
+    public async Task<Option<DeleteBoardResponse>> Handle(DeleteBoardCommand command,
         CancellationToken ct = default)
     {
-        var board = await db.Boards.Where(b => b.Id == command.Id).FirstOrDefaultAsync(ct);
+        var board = await db.Boards.Where(b => b.BoardId == command.BoardId).FirstOrDefaultAsync(ct);
 
-        if (board == null)
-            return BoardErrors.NotFound(command.Id);
+        if (board is null)
+            return new None();
 
         db.Boards.Remove(board);
 
         await db.SaveChangesAsync(ct);
 
-        return new DeleteBoardResponse(board.Id, board.Slug);
+        return new DeleteBoardResponse(board.BoardId, board.Slug);
     }
 }

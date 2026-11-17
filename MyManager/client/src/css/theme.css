@@ -1,0 +1,89 @@
+﻿/* Shared component styles */
+:root {
+    --theme-color-scheme: dark;
+    --theme-background: #1c1714;
+    --theme-surface: #302721;
+    --theme-text: #f0e2c7;
+    --theme-border: #9c8051;
+    --theme-border-width: 1px;
+    --theme-radius: 0.15rem;
+    --theme-button: #58432e;
+    --theme-button-hover: #70573b;
+    --theme-button-text: #fff0d4;
+    --theme-link: #e8c67d;
+    --theme-focus: #ffda84;
+    --theme-placeholder: #c3b39c;
+    --theme-button-shadow: inset 0 0 0 1px #34271a;
+    --theme-card-shadow: 0 4px 12px #0008;
+    --theme-font: 'Inter', sans-serif;
+    --theme-heading-font: Georgia, serif;
+}
+
+html {
+    color: var(--theme-text);
+    background: var(--theme-background);
+    font-family: var(--theme-font);
+    color-scheme: var(--theme-color-scheme);
+}
+
+body {
+    font-family: inherit;
+}
+
+h1, h2, h3 {
+    font-family: var(--theme-heading-font);
+}
+
+a {
+    color: var(--theme-link);
+    text-underline-offset: 0.2em;
+}
+
+a:hover {
+    text-decoration-thickness: 2px;
+}
+
+button, .button {
+    font: inherit;
+    font-weight: 700;
+    padding: 0.55rem 0.9rem;
+    border: var(--theme-border-width) solid var(--theme-border);
+    border-radius: var(--theme-radius);
+    background: var(--theme-button);
+    color: var(--theme-button-text);
+    box-shadow: var(--theme-button-shadow);
+    cursor: pointer;
+}
+
+button:hover:not(:disabled), .button:hover:not(:disabled) {
+    background: var(--theme-button-hover);
+    color: var(--theme-button-text);
+}
+
+button:active:not(:disabled), .button:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+button:disabled, .button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="color"]),
+textarea, select {
+    font: inherit;
+    padding: 0.5rem;
+    border: var(--theme-border-width) solid var(--theme-border);
+    border-radius: var(--theme-radius);
+    background: var(--theme-surface);
+    color: var(--theme-text);
+}
+
+input::placeholder, textarea::placeholder {
+    color: var(--theme-placeholder);
+}
+
+:where(a, button, input, textarea, select):focus-visible {
+    outline: 3px solid var(--theme-focus);
+    outline-offset: 3px;
+}

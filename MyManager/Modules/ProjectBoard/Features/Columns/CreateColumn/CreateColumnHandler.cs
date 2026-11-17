@@ -9,20 +9,20 @@ namespace MyManager.Modules.ProjectBoard.Features.Columns.CreateColumn;
 
 [RegisterScoped]
 public sealed class CreateColumnHandler(ProjectBoardDbContext db)
-    : IRequestHandler<CreateColumnCommand, Result<CreateColumnResponse>>
+    : IRequestHandler<CreateColumnCommand, Either<CreateColumnError, CreateColumnResponse>>
 {
-    public async Task<Result<CreateColumnResponse>> Handle(CreateColumnCommand command,
+    public async Task<Either<CreateColumnError, CreateColumnResponse>> Handle(CreateColumnCommand command,
         CancellationToken ct = default)
     {
-        var board = await db.Boards.FirstOrDefaultAsync(b => b.Id == command.BoardId, ct);
+        var board = await db.Boards.FirstOrDefaultAsync(b => b.BoardId == command.BoardId, ct);
 
         if (board == null)
-            return BoardErrors.NotFound(command.BoardId);
+            return new CreateColumnError(new BoardNotFound());
 
         var columnExists = await db.Columns.AnyAsync(c => c.BoardId == command.BoardId && c.Name == command.Name, ct);
 
         if (columnExists)
-            return new ColumnErrors.AlreadyExists(command.Name);
+            return new CreateColumnError(new ColumnAlreadyExists());
 
         var column = new Column
         {
@@ -35,8 +35,8 @@ public sealed class CreateColumnHandler(ProjectBoardDbContext db)
         await db.SaveChangesAsync(ct);
 
         return new CreateColumnResponse(
-            column.Id,
-            board.Id,
+            column.ColumnId,
+            board.BoardId,
             board.Slug,
             column.Name,
             column.CreatedAt

@@ -1,6 +1,9 @@
-﻿namespace MyManager.Modules.ProjectBoard.Features.Boards.DeleteBoard;
+﻿using MyManager.Common;
+using MyManager.Http;
+
+namespace MyManager.Modules.ProjectBoard.Features.Boards.DeleteBoard;
 
 public readonly record struct DeleteBoardServices(
-    IDeleteBoardHandler Handler,
+    IRequestHandler<DeleteBoardCommand, Option<DeleteBoardResponse>> Handler,
     ILogger<ProjectBoardModule> Logger
 );

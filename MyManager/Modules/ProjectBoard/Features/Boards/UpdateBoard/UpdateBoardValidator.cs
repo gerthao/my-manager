@@ -9,31 +9,30 @@ public sealed class UpdateBoardValidator : IValidator<UpdateBoardRequest, Update
 {
     public Validated<ValidationError, UpdateBoardCommand> Validate(UpdateBoardRequest request) =>
     (
-        ValidateName(request.Body.Name),
+        ValidateName(request.Body.Name.ToOption()),
         ValidateDescription(request.Body.Description.ToOption())
-    ).MapN((name, description) => new UpdateBoardCommand(request.Id, name, description));
+    ).MapN((name, description) => new UpdateBoardCommand(request.BoardId, name, description));
 
     private static Validated<ValidationError, Option<string>> ValidateDescription(Option<string> description)
     {
-        var d = description.Map(d => d.Trim()).FilterNot(d => d == "");
+        var d = description.Map(static d => d.Trim()).FilterNot(static d => d == "");
 
-        return Validated<ValidationError, Option<string>>.Condition(
-            d is None || d.Exists(e => e.Trim().Length <= 255),
-            () => d,
-            () => new ValidationError("description", "Board description cannot exceed 255 characters.")
-        );
+        return d switch
+        {
+            Some<string>({ Length: > 255 }) => new ValidationError("description", "Board description cannot exceed 255 characters."),
+            _ => d,
+        };
     }
 
-    private static Validated<ValidationError, string> ValidateName(string name)
+    private static Validated<ValidationError, Option<string>> ValidateName(Option<string> name)
     {
-        var n = name.Trim();
+        var n = name.Map(static n => n.Trim());
 
-        if (string.IsNullOrWhiteSpace(n))
-            return new ValidationError("name", "Board name must be at least 1 character long.");
-
-        if (n.Length > 100)
-            return new ValidationError("name", "Board name cannot exceed 100 characters.");
-
-        return n;
+        return n switch
+        {
+            Some<string>(var value) when string.IsNullOrEmpty(value) => new ValidationError("name", "Board name must be at least 1 character long."),
+            Some<string>({ Length: > 100 }) => new ValidationError("name", "Board name cannot exceed 100 characters."),
+            _ => n,
+        };
     }
 }

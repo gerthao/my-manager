@@ -14,13 +14,14 @@ public sealed class CreateBoardValidator : IValidator<CreateBoardRequest, Create
 
     private static Validated<ValidationError, Option<string>> ValidateDescription(Option<string> description)
     {
-        var desc = description.Map(d => d.Trim());
+        var d = description.Map(static d => d.Trim()).FilterNot(static d => d == "");
 
-        return Validated<ValidationError, Option<string>>.Condition(
-            desc is None || desc.Exists(d => d.Length <= 255),
-            () => description.FilterNot(d => d == ""),
-            () => new ValidationError("description", "Board description cannot exceed 255 characters.")
-        );
+        return d switch
+        {
+            Some<string>({ Length: > 255 }) => new ValidationError("description", "Board description cannot exceed 255 characters."),
+            _ => d,
+        };
+
     }
 
     private static Validated<ValidationError, string> ValidateName(string name)

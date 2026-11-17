@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using MyManager.Http;
 using MyManager.Routing;
 using MyManager.Services;
@@ -8,13 +9,35 @@ builder.Services.AddOpenApi();
 builder.RegisterModuleServices();
 
 builder.Services.RegisterAutoServices();
-builder.Services.AddProblemDetails();
+
+builder.Services.AddProblemDetails(opts =>
+{
+    opts.CustomizeProblemDetails = ctx =>
+    {
+        ctx.ProblemDetails.Extensions["traceId"] = Activity.Current?.Id ?? ctx.HttpContext.TraceIdentifier;
+    };
+});
+
+builder.Services.AddCors(opts =>
+{
+    opts.AddPolicy("ViteDevPolicy", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .WithExposedHeaders("Location");
+    });
+});
 
 var app = builder.Build();
 
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseCors("ViteDevPolicy");
+    app.MapOpenApi("openapi/v1.yaml");
 }
 
 app.UseHttpsRedirection();

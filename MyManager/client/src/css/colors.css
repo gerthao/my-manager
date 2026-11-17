@@ -1,0 +1,213 @@
+﻿:root {
+    --color-primary-chroma: 0.3;
+    --color-primary-hue: 250;
+
+    --color-primary-10: oklch(
+            0.95 var(--color-primary-chroma) var(--color-primary-hue)
+    );
+    --color-primary-20: oklch(
+            0.9 var(--color-primary-chroma) var(--color-primary-hue)
+    );
+    --color-primary-30: oklch(
+            0.8 var(--color-primary-chroma) var(--color-primary-hue)
+    );
+    --color-primary-40: oklch(
+            0.7 var(--color-primary-chroma) var(--color-primary-hue)
+    );
+    --color-primary-50: oklch(
+            0.6 var(--color-primary-chroma) var(--color-primary-hue)
+    );
+    --color-primary-60: oklch(
+            0.5 var(--color-primary-chroma) var(--color-primary-hue)
+    );
+    --color-primary-70: oklch(
+            0.4 var(--color-primary-chroma) var(--color-primary-hue)
+    );
+    --color-primary-80: oklch(
+            0.3 var(--color-primary-chroma) var(--color-primary-hue)
+    );
+    --color-primary-90: oklch(
+            0.25 var(--color-primary-chroma) var(--color-primary-hue)
+    );
+    --color-primary-100: oklch(
+            0.2 var(--color-primary-chroma) var(--color-primary-hue)
+    );
+    --color-primary: var(--color-primary-50);
+
+    --color-secondary-chroma: 0.15;
+    --color-secondary-hue: 145;
+
+    --color-secondary-10: oklch(
+            0.95 var(--color-secondary-chroma) var(--color-secondary-hue)
+    );
+    --color-secondary-20: oklch(
+            0.9 var(--color-secondary-chroma) var(--color-secondary-hue)
+    );
+    --color-secondary-30: oklch(
+            0.8 var(--color-secondary-chroma) var(--color-secondary-hue)
+    );
+    --color-secondary-40: oklch(
+            0.7 var(--color-secondary-chroma) var(--color-secondary-hue)
+    );
+    --color-secondary-50: oklch(
+            0.6 var(--color-secondary-chroma) var(--color-secondary-hue)
+    );
+    --color-secondary-60: oklch(
+            0.5 var(--color-secondary-chroma) var(--color-secondary-hue)
+    );
+    --color-secondary-70: oklch(
+            0.4 var(--color-secondary-chroma) var(--color-secondary-hue)
+    );
+    --color-secondary-80: oklch(
+            0.3 var(--color-secondary-chroma) var(--color-secondary-hue)
+    );
+    --color-secondary-90: oklch(
+            0.25 var(--color-secondary-chroma) var(--color-secondary-hue)
+    );
+    --color-secondary-100: oklch(
+            0.2 var(--color-secondary-chroma) var(--color-secondary-hue)
+    );
+    --color-secondary: var(--color-secondary-50);
+
+    --color-neutral-chroma: 0;
+    --color-neutral-hue: 0;
+
+    --color-neutral-0: oklch(1 0 0);
+    --color-neutral-10: oklch(
+            0.95 var(--color-neutral-chroma) var(--color-neutral-hue)
+    );
+    --color-neutral-20: oklch(
+            0.9 var(--color-neutral-chroma) var(--color-neutral-hue)
+    );
+    --color-neutral-30: oklch(
+            0.8 var(--color-neutral-chroma) var(--color-neutral-hue)
+    );
+    --color-neutral-40: oklch(
+            0.7 var(--color-neutral-chroma) var(--color-neutral-hue)
+    );
+    --color-neutral-50: oklch(
+            0.6 var(--color-neutral-chroma) var(--color-neutral-hue)
+    );
+    --color-neutral-60: oklch(
+            0.5 var(--color-neutral-chroma) var(--color-neutral-hue)
+    );
+    --color-neutral-70: oklch(
+            0.4 var(--color-neutral-chroma) var(--color-neutral-hue)
+    );
+    --color-neutral-80: oklch(
+            0.3 var(--color-neutral-chroma) var(--color-neutral-hue)
+    );
+    --color-neutral-90: oklch(
+            0.25 var(--color-neutral-chroma) var(--color-neutral-hue)
+    );
+    --color-neutral-100: oklch(
+            0.2 var(--color-neutral-chroma) var(--color-neutral-hue)
+    );
+    --color-neutral-110: oklch(1 0 0);
+    --color-neutral: var(--color-neutral-50);
+
+    --color-success-chroma: 0.2;
+    --color-success-hue: 145;
+
+    --color-success-10: oklch(
+            0.95 var(--color-success-chroma) var(--color-success-hue)
+    );
+    --color-success-20: oklch(
+            0.9 var(--color-success-chroma) var(--color-success-hue)
+    );
+    --color-success-30: oklch(
+            0.8 var(--color-success-chroma) var(--color-success-hue)
+    );
+    --color-success-40: oklch(
+            0.7 var(--color-success-chroma) var(--color-success-hue)
+    );
+    --color-success-50: oklch(
+            0.6 var(--color-success-chroma) var(--color-success-hue)
+    );
+    --color-success-60: oklch(
+            0.5 var(--color-success-chroma) var(--color-success-hue)
+    );
+    --color-success-70: oklch(
+            0.4 var(--color-success-chroma) var(--color-success-hue)
+    );
+    --color-success-80: oklch(
+            0.3 var(--color-success-chroma) var(--color-success-hue)
+    );
+    --color-success-90: oklch(
+            0.25 var(--color-success-chroma) var(--color-success-hue)
+    );
+    --color-success-100: oklch(
+            0.2 var(--color-success-chroma) var(--color-success-hue)
+    );
+    --color-success: var(--color-success-50);
+
+    --color-danger-chroma: 0.25;
+    --color-danger-hue: 20;
+
+    --color-danger-10: oklch(
+            0.95 var(--color-danger-chroma) var(--color-danger-hue)
+    );
+    --color-danger-20: oklch(
+            0.9 var(--color-danger-chroma) var(--color-danger-hue)
+    );
+    --color-danger-30: oklch(
+            0.8 var(--color-danger-chroma) var(--color-danger-hue)
+    );
+    --color-danger-40: oklch(
+            0.7 var(--color-danger-chroma) var(--color-danger-hue)
+    );
+    --color-danger-50: oklch(
+            0.6 var(--color-danger-chroma) var(--color-danger-hue)
+    );
+    --color-danger-60: oklch(
+            0.5 var(--color-danger-chroma) var(--color-danger-hue)
+    );
+    --color-danger-70: oklch(
+            0.4 var(--color-danger-chroma) var(--color-danger-hue)
+    );
+    --color-danger-80: oklch(
+            0.3 var(--color-danger-chroma) var(--color-danger-hue)
+    );
+    --color-danger-90: oklch(
+            0.25 var(--color-danger-chroma) var(--color-danger-hue)
+    );
+    --color-danger-100: oklch(
+            0.2 var(--color-danger-chroma) var(--color-danger-hue)
+    );
+    --color-danger: var(--color-danger-50);
+
+    --color-warning-chroma: 0.15;
+    --color-warning-hue: 100;
+
+    --color-warning-10: oklch(
+            0.95 var(--color-warning-chroma) var(--color-warning-hue)
+    );
+    --color-warning-20: oklch(
+            0.9 var(--color-warning-chroma) var(--color-warning-hue)
+    );
+    --color-warning-30: oklch(
+            0.8 var(--color-warning-chroma) var(--color-warning-hue)
+    );
+    --color-warning-40: oklch(
+            0.7 var(--color-warning-chroma) var(--color-warning-hue)
+    );
+    --color-warning-50: oklch(
+            0.6 var(--color-warning-chroma) var(--color-warning-hue)
+    );
+    --color-warning-60: oklch(
+            0.5 var(--color-warning-chroma) var(--color-warning-hue)
+    );
+    --color-warning-70: oklch(
+            0.4 var(--color-warning-chroma) var(--color-warning-hue)
+    );
+    --color-warning-80: oklch(
+            0.3 var(--color-warning-chroma) var(--color-warning-hue)
+    );
+    --color-warning-90: oklch(
+            0.25 var(--color-warning-chroma) var(--color-warning-hue)
+    );
+    --color-warning-100: oklch(
+            0.2 var(--color-warning-chroma) var(--color-warning-hue)
+    );
+    --color-warning: var(--color-warning-50);
+}

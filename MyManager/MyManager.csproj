@@ -12,6 +12,7 @@
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="11.0.0-preview.7.26381.103" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="11.0.0-preview.7.26381.103" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="11.0.0-preview.7.26381.103" />
+        <PackageReference Include="RazorSlices" Version="0.11.3" />
     </ItemGroup>
 
     <ItemGroup>
@@ -21,10 +22,19 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference 
-              Include="..\MyManager.SourceGenerators\MyManager.SourceGenerators\MyManager.SourceGenerators.csproj"
-              OutputItemType="Analyzer"
-      />
+      <ProjectReference Include="..\MyManager.SourceGenerators\MyManager.SourceGenerators\MyManager.SourceGenerators.csproj" OutputItemType="Analyzer" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Modules\ProjectBoard\Slices\Hello.cshtml" />
+      <_ContentIncludedByDefault Remove="Modules\ProjectBoard\Slices\_ViewImports.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="client\src\css\components\alert\" />
+      <Folder Include="client\src\css\components\dialog\" />
+      <Folder Include="client\src\css\components\form\" />
+      <Folder Include="client\src\css\components\popover\" />
     </ItemGroup>
 
 </Project>

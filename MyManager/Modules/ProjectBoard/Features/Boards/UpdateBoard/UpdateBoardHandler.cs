@@ -1,36 +1,49 @@
+using System.Runtime.CompilerServices;
 using Microsoft.EntityFrameworkCore;
 using MyManager.Attributes;
 using MyManager.Common;
-using MyManager.Common.Extensions;
 using MyManager.Http;
 using MyManager.Modules.ProjectBoard.Domain.Errors;
 
 namespace MyManager.Modules.ProjectBoard.Features.Boards.UpdateBoard;
 
-public interface IUpdateBoardHandler
-{
-    Task<Result<UpdateBoardResponse>> HandleCommand(UpdateBoardCommand command,
-        CancellationToken ct = default);
+[Union]
+public readonly record struct UpdateBoardCommandResult: IUnion {
+    public object Value { get; }
+
+    public UpdateBoardCommandResult(BoardNotFound value) => Value = value;
+    public UpdateBoardCommandResult(BoardUnchanged value) => Value = value;
+    public UpdateBoardCommandResult(UpdateBoardResponse value) => Value = value;
 }
 
 [RegisterScoped]
 public sealed class UpdateBoardHandler(ProjectBoardDbContext db)
-    : IRequestHandler<UpdateBoardCommand, Result<UpdateBoardResponse>>
+    : IRequestHandler<UpdateBoardCommand, Either<UpdateBoardError, UpdateBoardResponse>>
 {
-    public async Task<Result<UpdateBoardResponse>> Handle(UpdateBoardCommand command,
+    public async Task<Either<UpdateBoardError, UpdateBoardResponse>> Handle(UpdateBoardCommand command,
         CancellationToken ct = default)
     {
-        var board = await db.Boards.Where(b => b.Id == command.Id).FirstOrDefaultAsync(ct);
+        if (command.Name is None && command.Description is None)
+            return new UpdateBoardError(new BoardUnchanged());
 
-        if (board == null)
-            return BoardErrors.NotFound(command.Id);
+        var board = await db.Boards.Where(b => b.BoardId == command.BoardId).FirstOrDefaultAsync(ct);
 
-        board.Name = command.Name;
-        board.Description = command.Description.OrNull();
-        board.Slug = Slug.Slugify(command.Name);
+        if (board is null)
+            return new UpdateBoardError(new BoardNotFound());
+
+        if (command.Name is Some<string>(var n))
+        {
+            board.Name = n;
+            board.Slug = Slug.Slugify(n);
+        }
+
+        if (command.Description is Some<string>(var d))
+        {
+            board.Description = d;
+        }
 
         await db.SaveChangesAsync(ct);
 
-        return new UpdateBoardResponse(board.Id, board.Name, board.Slug, board.ModifiedAt);
+        return new UpdateBoardResponse(board.BoardId, board.Name, board.Slug, board.ModifiedAt);
     }
 }
