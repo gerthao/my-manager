@@ -1,47 +1,56 @@
 ﻿.button {
-    --_background_color: var(--color-neutral-0);
-    --_background_color_focus: var(--color-neutral-20);
-    --_background_color_hover: var(--color-neutral-20);
-    --_background_color_active: var(--color-neutral-40);
-    --_box_shadow: 4px 4px 0 0 var(--color-neutral-100), 0 0 0 2px var(--color-neutral-100);
-    --_box_shadow_focus: 0 0 0 2px var(--color-neutral-100);
+  --_background_color: var(--color-neutral-0);
+  --_background_color_focus: var(--color-neutral-20);
+  --_background_color_hover: var(--color-neutral-20);
+  --_background_color_active: var(--color-neutral-40);
+  --_box_shadow: 4px 4px 0 0 var(--color-neutral-100), 0 0 0 2px var(--color-neutral-100);
+  --_box_shadow_focus: 0 0 0 2px var(--color-neutral-100);
 
+  --_color: var(--color-neutral-100);
+  --_color_hover: var(--color-neutral-100);
+  --_color_active: var(--color-neutral-100);
+
+  --_outline: 2px solid transparent;
+  --_outline_focus: 2px solid var(--color-neutral-100);
+  --_outline_focus_offset: 4px;
+
+  font: inherit;
+  padding: 0.5rem 0.85rem;
+  border: none;
+  box-shadow: var(--_box_shadow);
+  border-radius: 2rem;
+
+  background: var(--_background_color);
+  color: var(--_color);
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  outline: var(--_outline);
+
+  &:hover {
+    background: var(--_background_color_hover);
+    color: var(--_color_hover);
+  }
+
+  &:focus-visible {
+    box-shadow: var(--_box_shadow_focus);
+    background-color: var(--_background_color_focus);
+    outline: var(--_outline_focus);
+    outline-offset: var(--_outline_focus_offset);
+  }
+
+  &:active {
+    background: var(--_background_color_active);
+    color: var(--_color_active);
+    outline-offset: 0px;
+  }
+
+  &[data-variant="text"] {
+    --_box_shadow: none;
+  }
+
+  &[data-variant="filled"] {
+    --_background-color: var(--color-primary-40);
     --_color: var(--color-neutral-100);
-    --_color_hover: var(--color-neutral-100);
-    --_color_active: var(--color-neutral-100);
-
-    --_outline: 2px solid transparent;
-    --_outline_focus: 2px solid var(--color-neutral-100);
-    --_outline_focus_offset: 4px;
-
-    font: inherit;
-    padding: 0.5rem 0.85rem;
-    border: none;
-    box-shadow: var(--_box_shadow);
-    border-radius: 2rem;
-
-    background: var(--_background_color);
-    color: var(--_color);
-    cursor: pointer;
-    transition: all 0.15s ease;
-
-    outline: var(--_outline);
-
-    &:hover {
-        background: var(--_background_color_hover);
-        color: var(--_color_hover);
-    }
-
-    &:focus-visible {
-        box-shadow: var(--_box_shadow_focus);
-        background-color: var(--_background_color_focus);
-        outline: var(--_outline_focus);
-        outline-offset: var(--_outline_focus_offset);
-    }
-
-    &:active {
-        background: var(--_background_color_active);
-        color: var(--_color_active);
-        outline-offset: 0px;
-    }
+  }
 }

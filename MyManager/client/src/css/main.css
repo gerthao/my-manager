@@ -1,48 +1,48 @@
 ﻿:root {
-    /*color-scheme: light dark;*/
-    --font-main: '';
-    --background-dark: oklch(0.3 0.033 256);
-    --background-light: oklch(0.97 0 0);
-    --background-light-1: oklch(0.84 0 0);
-    --background-light-2: oklch(0.91 0 0);
-    --shadow-button: 5px 4px 0 0 var(--color-neutral-100), 0 0 0 1px var(--color-neutral-100);
-    --shadow-card: 7px 6px 0 0 var(--color-neutral-100), 0 0 0 1px var(--color-neutral-100);
+  /*color-scheme: light dark;*/
+  --font-main: "";
+  --background-dark: oklch(0.3 0.033 256);
+  --background-light: oklch(0.97 0 0);
+  --background-light-1: oklch(0.84 0 0);
+  --background-light-2: oklch(0.91 0 0);
+  --shadow-button: 5px 4px 0 0 var(--color-neutral-100), 0 0 0 1px var(--color-neutral-100);
+  --shadow-card: 7px 6px 0 0 var(--color-neutral-100), 0 0 0 1px var(--color-neutral-100);
 }
 
 html {
-    background-color: var(--background-light);
-    /*background-image:*/
-    /*        linear-gradient(*/
-    /*                to right,*/
-    /*                var(--background-light-1) 1px,*/
-    /*                transparent 1px*/
-    /*        ),*/
-    /*        linear-gradient(*/
-    /*                to bottom,*/
-    /*                var(--background-light-1) 1px,*/
-    /*                transparent 1px*/
-    /*        ),*/
-    /*        linear-gradient(*/
-    /*                to right,*/
-    /*                var(--background-light-2) 1px,*/
-    /*                transparent 1px*/
-    /*        ),*/
-    /*        linear-gradient(*/
-    /*                to bottom,*/
-    /*                var(--background-light-2) 1px,*/
-    /*                transparent 1px*/
-    /*        );*/
-    /*background-size:*/
-    /*        100px 100px,*/
-    /*        100px 100px,*/
-    /*        20px 20px,*/
-    /*        20px 20px;*/
+  background-color: var(--background-light);
+  /*background-image:*/
+  /*        linear-gradient(*/
+  /*                to right,*/
+  /*                var(--background-light-1) 1px,*/
+  /*                transparent 1px*/
+  /*        ),*/
+  /*        linear-gradient(*/
+  /*                to bottom,*/
+  /*                var(--background-light-1) 1px,*/
+  /*                transparent 1px*/
+  /*        ),*/
+  /*        linear-gradient(*/
+  /*                to right,*/
+  /*                var(--background-light-2) 1px,*/
+  /*                transparent 1px*/
+  /*        ),*/
+  /*        linear-gradient(*/
+  /*                to bottom,*/
+  /*                var(--background-light-2) 1px,*/
+  /*                transparent 1px*/
+  /*        );*/
+  /*background-size:*/
+  /*        100px 100px,*/
+  /*        100px 100px,*/
+  /*        20px 20px,*/
+  /*        20px 20px;*/
 }
 
 body {
-    font-family: 'Chivo Mono Variable', monospace;
-    font-weight: 400;
-    font-style: normal;
+  font-family: "Chivo Mono Variable", monospace;
+  font-weight: 400;
+  font-style: normal;
 }
 
 /*@media (prefers-color-scheme: dark) {*/

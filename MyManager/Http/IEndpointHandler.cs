@@ -12,7 +12,6 @@ public interface IEndpointHandler<in TServices, TResponse> where TServices : ISe
     static abstract Task<TResponse> HandleEndpoint(TServices services, CancellationToken ct = default);
 }
 
-
 public interface IEndpointHandler<TResponse>
 {
     static abstract Task<TResponse> HandleEndpoint(CancellationToken ct = default);

@@ -1,5 +1,5 @@
 ﻿.wrapper {
-    --_max-width: var(--max-width, 800px);
-    max-width: var(--_max-width);
-    margin-inline: auto;
+  --_max-width: var(--max-width, 800px);
+  max-width: var(--_max-width);
+  margin-inline: auto;
 }

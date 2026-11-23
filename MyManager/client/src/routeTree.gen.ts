@@ -15,7 +15,6 @@ import { Route as ExampleRouteImport } from './routes/example'
 import { Route as ProjectBoardBoardsIndexRouteImport } from './routes/project-board/boards.index'
 import { Route as ProjectBoardBoardsNewRouteImport } from './routes/project-board/boards.new'
 import { Route as ProjectBoardBoardsBoardIdSlugRouteImport } from './routes/project-board/boards.$boardId.$slug'
-import { Route as ProjectBoardBoardsBoardIdSlugColumnsNewRouteImport } from './routes/project-board/boards.$boardId.$slug.columns.new'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -48,12 +47,6 @@ const ProjectBoardBoardsBoardIdSlugRoute =
     path: '/project-board/boards/$boardId/$slug',
     getParentRoute: () => rootRouteImport,
   } as any)
-const ProjectBoardBoardsBoardIdSlugColumnsNewRoute =
-  ProjectBoardBoardsBoardIdSlugColumnsNewRouteImport.update({
-    id: '/columns/new',
-    path: '/columns/new',
-    getParentRoute: () => ProjectBoardBoardsBoardIdSlugRoute,
-  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,8 +54,7 @@ export interface FileRoutesByFullPath {
   '/example': typeof ExampleRoute
   '/project-board/boards/new': typeof ProjectBoardBoardsNewRoute
   '/project-board/boards/': typeof ProjectBoardBoardsIndexRoute
-  '/project-board/boards/$boardId/$slug': typeof ProjectBoardBoardsBoardIdSlugRouteWithChildren
-  '/project-board/boards/$boardId/$slug/columns/new': typeof ProjectBoardBoardsBoardIdSlugColumnsNewRoute
+  '/project-board/boards/$boardId/$slug': typeof ProjectBoardBoardsBoardIdSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,8 +62,7 @@ export interface FileRoutesByTo {
   '/example': typeof ExampleRoute
   '/project-board/boards/new': typeof ProjectBoardBoardsNewRoute
   '/project-board/boards': typeof ProjectBoardBoardsIndexRoute
-  '/project-board/boards/$boardId/$slug': typeof ProjectBoardBoardsBoardIdSlugRouteWithChildren
-  '/project-board/boards/$boardId/$slug/columns/new': typeof ProjectBoardBoardsBoardIdSlugColumnsNewRoute
+  '/project-board/boards/$boardId/$slug': typeof ProjectBoardBoardsBoardIdSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,8 +71,7 @@ export interface FileRoutesById {
   '/example': typeof ExampleRoute
   '/project-board/boards/new': typeof ProjectBoardBoardsNewRoute
   '/project-board/boards/': typeof ProjectBoardBoardsIndexRoute
-  '/project-board/boards/$boardId/$slug': typeof ProjectBoardBoardsBoardIdSlugRouteWithChildren
-  '/project-board/boards/$boardId/$slug/columns/new': typeof ProjectBoardBoardsBoardIdSlugColumnsNewRoute
+  '/project-board/boards/$boardId/$slug': typeof ProjectBoardBoardsBoardIdSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -92,7 +82,6 @@ export interface FileRouteTypes {
     | '/project-board/boards/new'
     | '/project-board/boards/'
     | '/project-board/boards/$boardId/$slug'
-    | '/project-board/boards/$boardId/$slug/columns/new'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -101,7 +90,6 @@ export interface FileRouteTypes {
     | '/project-board/boards/new'
     | '/project-board/boards'
     | '/project-board/boards/$boardId/$slug'
-    | '/project-board/boards/$boardId/$slug/columns/new'
   id:
     | '__root__'
     | '/'
@@ -110,7 +98,6 @@ export interface FileRouteTypes {
     | '/project-board/boards/new'
     | '/project-board/boards/'
     | '/project-board/boards/$boardId/$slug'
-    | '/project-board/boards/$boardId/$slug/columns/new'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -119,7 +106,7 @@ export interface RootRouteChildren {
   ExampleRoute: typeof ExampleRoute
   ProjectBoardBoardsNewRoute: typeof ProjectBoardBoardsNewRoute
   ProjectBoardBoardsIndexRoute: typeof ProjectBoardBoardsIndexRoute
-  ProjectBoardBoardsBoardIdSlugRoute: typeof ProjectBoardBoardsBoardIdSlugRouteWithChildren
+  ProjectBoardBoardsBoardIdSlugRoute: typeof ProjectBoardBoardsBoardIdSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -166,30 +153,8 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectBoardBoardsBoardIdSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/project-board/boards/$boardId/$slug/columns/new': {
-      id: '/project-board/boards/$boardId/$slug/columns/new'
-      path: '/columns/new'
-      fullPath: '/project-board/boards/$boardId/$slug/columns/new'
-      preLoaderRoute: typeof ProjectBoardBoardsBoardIdSlugColumnsNewRouteImport
-      parentRoute: typeof ProjectBoardBoardsBoardIdSlugRoute
-    }
   }
 }
-
-interface ProjectBoardBoardsBoardIdSlugRouteChildren {
-  ProjectBoardBoardsBoardIdSlugColumnsNewRoute: typeof ProjectBoardBoardsBoardIdSlugColumnsNewRoute
-}
-
-const ProjectBoardBoardsBoardIdSlugRouteChildren: ProjectBoardBoardsBoardIdSlugRouteChildren =
-  {
-    ProjectBoardBoardsBoardIdSlugColumnsNewRoute:
-      ProjectBoardBoardsBoardIdSlugColumnsNewRoute,
-  }
-
-const ProjectBoardBoardsBoardIdSlugRouteWithChildren =
-  ProjectBoardBoardsBoardIdSlugRoute._addFileChildren(
-    ProjectBoardBoardsBoardIdSlugRouteChildren,
-  )
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -197,8 +162,7 @@ const rootRouteChildren: RootRouteChildren = {
   ExampleRoute: ExampleRoute,
   ProjectBoardBoardsNewRoute: ProjectBoardBoardsNewRoute,
   ProjectBoardBoardsIndexRoute: ProjectBoardBoardsIndexRoute,
-  ProjectBoardBoardsBoardIdSlugRoute:
-    ProjectBoardBoardsBoardIdSlugRouteWithChildren,
+  ProjectBoardBoardsBoardIdSlugRoute: ProjectBoardBoardsBoardIdSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -11,8 +11,8 @@
  */
 
 export interface CreateBoardRequestBody {
-  name: string;
-  description?: null | string;
+  name: string
+  description?: null | string
 }
 
 export interface CreateBoardResponse {
@@ -20,16 +20,16 @@ export interface CreateBoardResponse {
    * @format int32
    * @pattern ^-?(?:0|[1-9]\d*)$
    */
-  boardId: number | string;
-  name: string;
-  slug: string;
-  description: null | string;
+  boardId: number | string
+  name: string
+  slug: string
+  description: null | string
   /** @format date-time */
-  createdAt: string;
+  createdAt: string
 }
 
 export interface CreateColumnBody {
-  name: string;
+  name: string
 }
 
 export interface CreateColumnResponse {
@@ -37,16 +37,16 @@ export interface CreateColumnResponse {
    * @format int32
    * @pattern ^-?(?:0|[1-9]\d*)$
    */
-  columnId: number | string;
+  columnId: number | string
   /**
    * @format int32
    * @pattern ^-?(?:0|[1-9]\d*)$
    */
-  boardId: number | string;
-  boardSlug: string;
-  name: string;
+  boardId: number | string
+  boardSlug: string
+  name: string
   /** @format date-time */
-  createdAt: string;
+  createdAt: string
 }
 
 export interface DeleteColumnResponse {
@@ -54,15 +54,15 @@ export interface DeleteColumnResponse {
    * @format int32
    * @pattern ^-?(?:0|[1-9]\d*)$
    */
-  boardId: number | string;
+  boardId: number | string
   /**
    * @format int32
    * @pattern ^-?(?:0|[1-9]\d*)$
    */
-  columnId: number | string;
-  name: string;
+  columnId: number | string
+  name: string
   /** @format date-time */
-  modifiedAt: string;
+  modifiedAt: string
 }
 
 export interface GetBoardByIdResponse {
@@ -70,14 +70,14 @@ export interface GetBoardByIdResponse {
    * @format int32
    * @pattern ^-?(?:0|[1-9]\d*)$
    */
-  boardId: number | string;
-  name: string;
-  slug: string;
-  description: null | string;
+  boardId: number | string
+  name: string
+  slug: string
+  description: null | string
   /** @format date-time */
-  createdAt: string;
+  createdAt: string
   /** @format date-time */
-  modifiedAt: string;
+  modifiedAt: string
 }
 
 export interface GetBoardBySlugResponse {
@@ -85,23 +85,23 @@ export interface GetBoardBySlugResponse {
    * @format int32
    * @pattern ^-?(?:0|[1-9]\d*)$
    */
-  boardId: number | string;
-  name: string;
-  slug: string;
-  description: null | string;
+  boardId: number | string
+  name: string
+  slug: string
+  description: null | string
   /** @format date-time */
-  createdAt: string;
+  createdAt: string
   /** @format date-time */
-  modifiedAt: string;
+  modifiedAt: string
 }
 
 export interface GetCardByIdResponse {
-  name: string;
-  description: null | string;
+  name: string
+  description: null | string
   /** @format date-time */
-  createdAt: string;
+  createdAt: string
   /** @format date-time */
-  modifiedAt: string;
+  modifiedAt: string
 }
 
 export interface GetColumnByIdResponse {
@@ -109,15 +109,15 @@ export interface GetColumnByIdResponse {
    * @format int32
    * @pattern ^-?(?:0|[1-9]\d*)$
    */
-  columnId: number | string;
+  columnId: number | string
   /**
    * @format int32
    * @pattern ^-?(?:0|[1-9]\d*)$
    */
-  boardId: number | string;
-  name: string;
+  boardId: number | string
+  name: string
   /** @format date-time */
-  modifiedAt: string;
+  modifiedAt: string
 }
 
 export interface ListBoardsResponse {
@@ -125,13 +125,13 @@ export interface ListBoardsResponse {
    * @format int32
    * @pattern ^-?(?:0|[1-9]\d*)$
    */
-  boardId: number | string;
-  name: string;
-  slug: string;
+  boardId: number | string
+  name: string
+  slug: string
   /** @format date-time */
-  createdAt: string;
+  createdAt: string
   /** @format date-time */
-  modifiedAt: string;
+  modifiedAt: string
 }
 
 export interface ListCardsResponse {
@@ -139,18 +139,18 @@ export interface ListCardsResponse {
    * @format int32
    * @pattern ^-?(?:0|[1-9]\d*)$
    */
-  cardId: number | string;
+  cardId: number | string
   /**
    * @format int32
    * @pattern ^-?(?:0|[1-9]\d*)$
    */
-  boardId: number | string;
-  name: string;
-  description: null | string;
+  boardId: number | string
+  name: string
+  description: null | string
   /** @format date-time */
-  createdAt: string;
+  createdAt: string
   /** @format date-time */
-  modifiedAt: string;
+  modifiedAt: string
 }
 
 export interface ListColumnsResponse {
@@ -158,25 +158,25 @@ export interface ListColumnsResponse {
    * @format int32
    * @pattern ^-?(?:0|[1-9]\d*)$
    */
-  columnId: number | string;
-  name: string;
+  columnId: number | string
+  name: string
 }
 
 export interface ProblemDetails {
-  type?: null | string;
-  title?: null | string;
+  type?: null | string
+  title?: null | string
   /**
    * @format int32
    * @pattern ^-?(?:0|[1-9]\d*)$
    */
-  status?: null | number | string;
-  detail?: null | string;
-  instance?: null | string;
+  status?: null | number | string
+  detail?: null | string
+  instance?: null | string
 }
 
 export interface UpdateBoardRequestBody {
-  name?: null | string;
-  description?: null | string;
+  name?: null | string
+  description?: null | string
 }
 
 export interface UpdateBoardResponse {
@@ -184,15 +184,15 @@ export interface UpdateBoardResponse {
    * @format int32
    * @pattern ^-?(?:0|[1-9]\d*)$
    */
-  boardId: number | string;
-  name: string;
-  slug: string;
+  boardId: number | string
+  name: string
+  slug: string
   /** @format date-time */
-  modifiedAt: string;
+  modifiedAt: string
 }
 
 export interface UpdateColumnRequestBody {
-  name: null | string;
+  name: null | string
 }
 
 export interface UpdateColumnResponse {
@@ -200,73 +200,69 @@ export interface UpdateColumnResponse {
    * @format int32
    * @pattern ^-?(?:0|[1-9]\d*)$
    */
-  boardId: number | string;
+  boardId: number | string
   /**
    * @format int32
    * @pattern ^-?(?:0|[1-9]\d*)$
    */
-  columnId: number | string;
-  name: string;
+  columnId: number | string
+  name: string
   /** @format date-time */
-  modifiedAt: string;
+  modifiedAt: string
 }
 
 export interface ValidationProblemDetails {
-  type?: null | string;
-  title?: null | string;
+  type?: null | string
+  title?: null | string
   /**
    * @format int32
    * @pattern ^-?(?:0|[1-9]\d*)$
    */
-  status?: null | number | string;
-  detail?: null | string;
-  instance?: null | string;
-  errors?: Record<string, string[]>;
+  status?: null | number | string
+  detail?: null | string
+  instance?: null | string
+  errors?: Record<string, string[]>
 }
 
-export type QueryParamsType = Record<string | number, any>;
-export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
+export type QueryParamsType = Record<string | number, any>
+export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">
 
 export interface FullRequestParams extends Omit<RequestInit, "body"> {
   /** set parameter to `true` for call `securityWorker` for this request */
-  secure?: boolean;
+  secure?: boolean
   /** request path */
-  path: string;
+  path: string
   /** content type of request body */
-  type?: ContentType;
+  type?: ContentType
   /** query params */
-  query?: QueryParamsType;
+  query?: QueryParamsType
   /** format of response (i.e. response.json() -> format: "json") */
-  format?: ResponseFormat;
+  format?: ResponseFormat
   /** request body */
-  body?: unknown;
+  body?: unknown
   /** base url */
-  baseUrl?: string;
+  baseUrl?: string
   /** request cancellation token */
-  cancelToken?: CancelToken;
+  cancelToken?: CancelToken
 }
 
-export type RequestParams = Omit<
-  FullRequestParams,
-  "body" | "method" | "query" | "path"
->;
+export type RequestParams = Omit<FullRequestParams, "body" | "method" | "query" | "path">
 
 export interface ApiConfig<SecurityDataType = unknown> {
-  baseUrl?: string;
-  baseApiParams?: Omit<RequestParams, "baseUrl" | "cancelToken" | "signal">;
+  baseUrl?: string
+  baseApiParams?: Omit<RequestParams, "baseUrl" | "cancelToken" | "signal">
   securityWorker?: (
     securityData: SecurityDataType | null,
-  ) => Promise<RequestParams | void> | RequestParams | void;
-  customFetch?: typeof fetch;
+  ) => Promise<RequestParams | void> | RequestParams | void
+  customFetch?: typeof fetch
 }
 
-export interface HttpResponse<D extends unknown, E extends unknown = unknown>
-  extends Response {
-  data: D;
-  error: E;
+export interface HttpResponse<D extends unknown, E extends unknown = unknown> extends Response {
+  data: D
+  error: E
 }
 
-type CancelToken = Symbol | string | number;
+type CancelToken = Symbol | string | number
 
 export enum ContentType {
   Json = "application/json",
@@ -277,59 +273,56 @@ export enum ContentType {
 }
 
 export class HttpClient<SecurityDataType = unknown> {
-  public baseUrl: string = "http://localhost:5275";
-  private securityData: SecurityDataType | null = null;
-  private securityWorker?: ApiConfig<SecurityDataType>["securityWorker"];
-  private abortControllers = new Map<CancelToken, AbortController>();
-  private customFetch = (...fetchParams: Parameters<typeof fetch>) =>
-    fetch(...fetchParams);
+  public baseUrl: string = "http://localhost:5275"
+  private securityData: SecurityDataType | null = null
+  private securityWorker?: ApiConfig<SecurityDataType>["securityWorker"]
+  private abortControllers = new Map<CancelToken, AbortController>()
+  private customFetch = (...fetchParams: Parameters<typeof fetch>) => fetch(...fetchParams)
 
   private baseApiParams: RequestParams = {
     credentials: "same-origin",
     headers: {},
     redirect: "follow",
     referrerPolicy: "no-referrer",
-  };
+  }
 
   constructor(apiConfig: ApiConfig<SecurityDataType> = {}) {
-    Object.assign(this, apiConfig);
+    Object.assign(this, apiConfig)
   }
 
   public setSecurityData = (data: SecurityDataType | null) => {
-    this.securityData = data;
-  };
+    this.securityData = data
+  }
 
   protected encodeQueryParam(key: string, value: any) {
-    const encodedKey = encodeURIComponent(key);
-    return `${encodedKey}=${encodeURIComponent(typeof value === "number" ? value : `${value}`)}`;
+    const encodedKey = encodeURIComponent(key)
+    return `${encodedKey}=${encodeURIComponent(typeof value === "number" ? value : `${value}`)}`
   }
 
   protected addQueryParam(query: QueryParamsType, key: string) {
-    return this.encodeQueryParam(key, query[key]);
+    return this.encodeQueryParam(key, query[key])
   }
 
   protected addArrayQueryParam(query: QueryParamsType, key: string) {
-    const value = query[key];
-    return value.map((v: any) => this.encodeQueryParam(key, v)).join("&");
+    const value = query[key]
+    return value.map((v: any) => this.encodeQueryParam(key, v)).join("&")
   }
 
   protected toQueryString(rawQuery?: QueryParamsType): string {
-    const query = rawQuery || {};
-    const keys = Object.keys(query).filter(
-      (key) => "undefined" !== typeof query[key],
-    );
+    const query = rawQuery || {}
+    const keys = Object.keys(query).filter((key) => "undefined" !== typeof query[key])
     return keys
       .map((key) =>
         Array.isArray(query[key])
           ? this.addArrayQueryParam(query, key)
           : this.addQueryParam(query, key),
       )
-      .join("&");
+      .join("&")
   }
 
   protected addQueryParams(rawQuery?: QueryParamsType): string {
-    const queryString = this.toQueryString(rawQuery);
-    return queryString ? `?${queryString}` : "";
+    const queryString = this.toQueryString(rawQuery)
+    return queryString ? `?${queryString}` : ""
   }
 
   private contentFormatters: Record<ContentType, (input: any) => any> = {
@@ -342,16 +335,14 @@ export class HttpClient<SecurityDataType = unknown> {
         ? JSON.stringify(input)
         : input,
     [ContentType.Text]: (input: any) =>
-      input !== null && typeof input !== "string"
-        ? JSON.stringify(input)
-        : input,
+      input !== null && typeof input !== "string" ? JSON.stringify(input) : input,
     [ContentType.FormData]: (input: any) => {
       if (input instanceof FormData) {
-        return input;
+        return input
       }
 
       return Object.keys(input || {}).reduce((formData, key) => {
-        const property = input[key];
+        const property = input[key]
         formData.append(
           key,
           property instanceof Blob
@@ -359,17 +350,14 @@ export class HttpClient<SecurityDataType = unknown> {
             : typeof property === "object" && property !== null
               ? JSON.stringify(property)
               : `${property}`,
-        );
-        return formData;
-      }, new FormData());
+        )
+        return formData
+      }, new FormData())
     },
     [ContentType.UrlEncoded]: (input: any) => this.toQueryString(input),
-  };
+  }
 
-  protected mergeRequestParams(
-    params1: RequestParams,
-    params2?: RequestParams,
-  ): RequestParams {
+  protected mergeRequestParams(params1: RequestParams, params2?: RequestParams): RequestParams {
     return {
       ...this.baseApiParams,
       ...params1,
@@ -379,33 +367,31 @@ export class HttpClient<SecurityDataType = unknown> {
         ...(params1.headers || {}),
         ...((params2 && params2.headers) || {}),
       },
-    };
+    }
   }
 
-  protected createAbortSignal = (
-    cancelToken: CancelToken,
-  ): AbortSignal | undefined => {
+  protected createAbortSignal = (cancelToken: CancelToken): AbortSignal | undefined => {
     if (this.abortControllers.has(cancelToken)) {
-      const abortController = this.abortControllers.get(cancelToken);
+      const abortController = this.abortControllers.get(cancelToken)
       if (abortController) {
-        return abortController.signal;
+        return abortController.signal
       }
-      return void 0;
+      return void 0
     }
 
-    const abortController = new AbortController();
-    this.abortControllers.set(cancelToken, abortController);
-    return abortController.signal;
-  };
+    const abortController = new AbortController()
+    this.abortControllers.set(cancelToken, abortController)
+    return abortController.signal
+  }
 
   public abortRequest = (cancelToken: CancelToken) => {
-    const abortController = this.abortControllers.get(cancelToken);
+    const abortController = this.abortControllers.get(cancelToken)
 
     if (abortController) {
-      abortController.abort();
-      this.abortControllers.delete(cancelToken);
+      abortController.abort()
+      this.abortControllers.delete(cancelToken)
     }
-  };
+  }
 
   public request = async <T = any, E = any>({
     body,
@@ -422,11 +408,11 @@ export class HttpClient<SecurityDataType = unknown> {
       ((typeof secure === "boolean" ? secure : this.baseApiParams.secure) &&
         this.securityWorker &&
         (await this.securityWorker(this.securityData))) ||
-      {};
-    const requestParams = this.mergeRequestParams(params, secureParams);
-    const queryString = query && this.toQueryString(query);
-    const payloadFormatter = this.contentFormatters[type || ContentType.Json];
-    const responseFormat = format || requestParams.format;
+      {}
+    const requestParams = this.mergeRequestParams(params, secureParams)
+    const queryString = query && this.toQueryString(query)
+    const payloadFormatter = this.contentFormatters[type || ContentType.Json]
+    const responseFormat = format || requestParams.format
 
     return this.customFetch(
       `${baseUrl || this.baseUrl || ""}${path}${queryString ? `?${queryString}` : ""}`,
@@ -434,48 +420,40 @@ export class HttpClient<SecurityDataType = unknown> {
         ...requestParams,
         headers: {
           ...(requestParams.headers || {}),
-          ...(type && type !== ContentType.FormData
-            ? { "Content-Type": type }
-            : {}),
+          ...(type && type !== ContentType.FormData ? { "Content-Type": type } : {}),
         },
-        signal:
-          (cancelToken
-            ? this.createAbortSignal(cancelToken)
-            : requestParams.signal) || null,
-        body:
-          typeof body === "undefined" || body === null
-            ? null
-            : payloadFormatter(body),
+        signal: (cancelToken ? this.createAbortSignal(cancelToken) : requestParams.signal) || null,
+        body: typeof body === "undefined" || body === null ? null : payloadFormatter(body),
       },
     ).then(async (response) => {
-      const r = response as HttpResponse<T, E>;
-      r.data = null as unknown as T;
-      r.error = null as unknown as E;
+      const r = response as HttpResponse<T, E>
+      r.data = null as unknown as T
+      r.error = null as unknown as E
 
-      const responseToParse = responseFormat ? response.clone() : response;
+      const responseToParse = responseFormat ? response.clone() : response
       const data = !responseFormat
         ? r
         : await responseToParse[responseFormat]()
             .then((data) => {
               if (r.ok) {
-                r.data = data;
+                r.data = data
               } else {
-                r.error = data;
+                r.error = data
               }
-              return r;
+              return r
             })
             .catch((e) => {
-              r.error = e;
-              return r;
-            });
+              r.error = e
+              return r
+            })
 
       if (cancelToken) {
-        this.abortControllers.delete(cancelToken);
+        this.abortControllers.delete(cancelToken)
       }
 
-      return data;
-    });
-  };
+      return data
+    })
+  }
 }
 
 /**
@@ -483,9 +461,7 @@ export class HttpClient<SecurityDataType = unknown> {
  * @version 1.0.0
  * @baseUrl http://localhost:5275
  */
-export class Api<
-  SecurityDataType extends unknown,
-> extends HttpClient<SecurityDataType> {
+export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
   home = {
     /**
      * No description
@@ -500,7 +476,7 @@ export class Api<
         method: "GET",
         ...params,
       }),
-  };
+  }
   api = {
     /**
      * No description
@@ -546,10 +522,7 @@ export class Api<
       data: UpdateBoardRequestBody,
       params: RequestParams = {},
     ) =>
-      this.request<
-        UpdateBoardResponse,
-        ValidationProblemDetails | ProblemDetails
-      >({
+      this.request<UpdateBoardResponse, ValidationProblemDetails | ProblemDetails>({
         path: `/api/project-board/boards/${boardId}`,
         method: "PATCH",
         body: data,
@@ -566,11 +539,7 @@ export class Api<
      * @summary Gets a board by slug and ID
      * @request GET:/api/project-board/boards/{boardId}-{slug}
      */
-    getBoardBySlug: (
-      boardId: number | string,
-      slug: string,
-      params: RequestParams = {},
-    ) =>
+    getBoardBySlug: (boardId: number | string, slug: string, params: RequestParams = {}) =>
       this.request<GetBoardBySlugResponse, ProblemDetails>({
         path: `/api/project-board/boards/${boardId}-${slug}`,
         method: "GET",
@@ -588,7 +557,7 @@ export class Api<
      */
     listBoards: (
       query?: {
-        Name?: string;
+        Name?: string
       },
       params: RequestParams = {},
     ) =>
@@ -609,10 +578,7 @@ export class Api<
      * @request POST:/api/project-board/boards
      */
     createBoard: (data: CreateBoardRequestBody, params: RequestParams = {}) =>
-      this.request<
-        CreateBoardResponse,
-        ValidationProblemDetails | ProblemDetails
-      >({
+      this.request<CreateBoardResponse, ValidationProblemDetails | ProblemDetails>({
         path: `/api/project-board/boards`,
         method: "POST",
         body: data,
@@ -629,11 +595,7 @@ export class Api<
      * @summary Get a card from a board by ID
      * @request GET:/api/project-board/boards/{boardId}/cards/{cardId}
      */
-    getCard: (
-      boardId: number | string,
-      cardId: number | string,
-      params: RequestParams = {},
-    ) =>
+    getCard: (boardId: number | string, cardId: number | string, params: RequestParams = {}) =>
       this.request<GetCardByIdResponse, ProblemDetails>({
         path: `/api/project-board/boards/${boardId}/cards/${cardId}`,
         method: "GET",
@@ -711,10 +673,7 @@ export class Api<
       data: UpdateColumnRequestBody,
       params: RequestParams = {},
     ) =>
-      this.request<
-        UpdateColumnResponse,
-        ValidationProblemDetails | ProblemDetails
-      >({
+      this.request<UpdateColumnResponse, ValidationProblemDetails | ProblemDetails>({
         path: `/api/project-board/boards/${boardId}/columns/${columnId}`,
         method: "PATCH",
         body: data,
@@ -747,15 +706,8 @@ export class Api<
      * @summary Creates a new column for a project board.
      * @request POST:/api/project-board/boards/{boardId}/columns
      */
-    createColumn: (
-      boardId: number | string,
-      data: CreateColumnBody,
-      params: RequestParams = {},
-    ) =>
-      this.request<
-        CreateColumnResponse,
-        ValidationProblemDetails | ProblemDetails
-      >({
+    createColumn: (boardId: number | string, data: CreateColumnBody, params: RequestParams = {}) =>
+      this.request<CreateColumnResponse, ValidationProblemDetails | ProblemDetails>({
         path: `/api/project-board/boards/${boardId}/columns`,
         method: "POST",
         body: data,
@@ -763,5 +715,5 @@ export class Api<
         format: "json",
         ...params,
       }),
-  };
+  }
 }

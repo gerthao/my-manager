@@ -34,4 +34,4 @@ export const queryKeys = {
     details: () => [...queryKeys.columns.all, "detail"] as const,
     detail: (id: string) => [...queryKeys.columns.details(), id] as const,
   },
-};
+}

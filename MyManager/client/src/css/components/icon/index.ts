@@ -1,2 +1,2 @@
-﻿export * from './GtIcon'
-export * from './Icons'
+﻿export * from "./GtIcon"
+export * from "./Icons"

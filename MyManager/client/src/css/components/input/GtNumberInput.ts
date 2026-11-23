@@ -1,8 +1,8 @@
-import {css, html, LitElement} from 'lit'
-import {property} from 'lit/decorators.js'
+import { css, html, LitElement } from "lit"
+import { property } from "lit/decorators.js"
 
 export class GtNumberInput extends LitElement {
-    static styles = css`
+  static styles = css`
         :host {
             --label-color: var(--color-neutral-90);
             --label-font-size: 0.875rem;
@@ -52,35 +52,35 @@ export class GtNumberInput extends LitElement {
                 }
             }
     `
-    @property() value: number = 0
-    @property() min: number = 0
-    @property() max: number = Infinity
-    @property() step: number = 1
-    @property() disabled: boolean = false
-    @property() readonly: boolean = false
-    @property() id: string = ''
-    @property() name: string = ''
-    @property() label: string = ''
-    @property() required: boolean = false
-    @property() placeholder: string = ''
-    @property() autocomplete: string = 'off'
-    @property() autofocus: boolean = false
+  @property() value: number = 0
+  @property() min: number = 0
+  @property() max: number = Infinity
+  @property() step: number = 1
+  @property() disabled: boolean = false
+  @property() readonly: boolean = false
+  @property() id: string = ""
+  @property() name: string = ""
+  @property() label: string = ""
+  @property() required: boolean = false
+  @property() placeholder: string = ""
+  @property() autocomplete: string = "off"
+  @property() autofocus: boolean = false
 
-    render() {
-        return html`
-            <div class="number-input-container">
-                <label for="${this.id}">${this.label}</label>
-                <input
-                        id="${this.id}"
-                        type="number"
-                        value="${this.value}"
-                        min="${this.min}"
-                        max="${this.max}"
-                        step="${this.step}"
-                        disabled="${this.disabled}"
-                        readonly="${this.readonly}"
-                />
-            </div>
-        `
-    }
+  render() {
+    return html`
+      <div class="number-input-container">
+        <label for="${this.id}">${this.label}</label>
+        <input
+          id="${this.id}"
+          type="number"
+          value="${this.value}"
+          min="${this.min}"
+          max="${this.max}"
+          step="${this.step}"
+          disabled="${this.disabled}"
+          readonly="${this.readonly}"
+        />
+      </div>
+    `
+  }
 }
